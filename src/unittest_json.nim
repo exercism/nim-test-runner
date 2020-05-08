@@ -1,8 +1,6 @@
-##
 ## An extension of the ``unittest.nim`` library to output json for Exercism v3
-##
 
-import json, unittest, streams, strformat, strutils
+import json, streams, strformat, unittest
 
 type
   JsonOutputFormatter* = ref object of OutputFormatter
@@ -13,9 +11,9 @@ type
     ranFirstTest*: bool
 
   JsonTestStatus* = enum
-    PASS,
-    FAIL,
-    ERROR
+    PASS = "pass",
+    FAIL = "fail",
+    ERROR = "error"
 
   JsonTestResult* = object
     name*: string
@@ -35,10 +33,9 @@ type
     of PASS, FAIL:
       discard
 
-
 proc newJsonOutputFormatter*(stream: Stream): <//>JsonOutputFormatter =
   ## Creates a formatter that writes report to the specified stream in
-  ## JUnit format.
+  ## JSON format.
   ## The ``stream`` is NOT closed automatically when the test are finished,
   ## because the formatter has no way to know when all tests are finished.
   ## You should invoke formatter.close() to finalize the report.
