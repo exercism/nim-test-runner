@@ -101,7 +101,11 @@ method testEnded*(formatter: JsonOutputFormatter, testResult: TestResult) =
 
     echo "Summary"
     if formatter.testStackTrace.len > 0:
-      jsonTestResult = JsonTestResult(name: testResult.testName, status: ERROR, message: fmt"{failureMsg}\n{formatter.testStackTrace}")
+      jsonTestResult = JsonTestResult(
+        name: testResult.testName,
+        status: ERROR,
+        message: fmt"{failureMsg}\n{formatter.testStackTrace}"
+      )
       echo "\tfailureMsg: ", failureMsg
       echo "\ttestStackTrace: ", formatter.testStackTrace
       if errs.len > 0:
@@ -110,7 +114,11 @@ method testEnded*(formatter: JsonOutputFormatter, testResult: TestResult) =
     else:
       echo "\tfailureMsg: ", failureMsg
       echo "\terrs: ", errs
-      jsonTestResult = JsonTestResult(name: testResult.testName, status: FAIL, message: fmt"{failureMsg}\n{errs}")
+      jsonTestResult = JsonTestResult(
+        name: testResult.testName,
+        status: FAIL,
+        message: fmt"{failureMsg}\n{errs}"
+      )
     formatter.result = ResultJson(status: FAIL, tests: formatter.result.tests)
 
   formatter.result.tests.add(jsonTestResult)
