@@ -22,9 +22,6 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
     
-    - name: Install Nim
-      run: apt-get install nim
-    
     # Runs a single command using the runners shell
     - name: Test test-runner
-      run: nim c -r tests/trunner.nim
+      run: nim c -r tests/*.nim
