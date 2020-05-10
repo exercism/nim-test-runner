@@ -72,19 +72,22 @@ method testEnded(formatter: JsonOutputFormatter, testResult: TestResult) =
   of TestStatus.SKIPPED:
     discard
   of TestStatus.FAILED:
-    let failureMsg = if formatter.testStackTrace.len > 0 and
-                        formatter.testErrors.len > 0:
-                       formatter.testErrors[^1]
-                     elif formatter.testErrors.len > 0:
-                       formatter.testErrors[0]
-                     else: "The test failed without outputting an error"
+    let failureMsg =
+      if formatter.testStackTrace.len > 0 and formatter.testErrors.len > 0:
+        formatter.testErrors[^1]
+      elif formatter.testErrors.len > 0:
+        formatter.testErrors[0]
+      else:
+        "The test failed without outputting an error"
 
     var errs = ""
     if formatter.testErrors.len > 1:
       var startIdx = if formatter.testStackTrace.len > 0: 0 else: 1
-      var endIdx = if formatter.testStackTrace.len > 0:
+      let endIdx =
+        if formatter.testStackTrace.len > 0:
           formatter.testErrors.len - 2
-        else: formatter.testErrors.len - 1
+        else:
+          formatter.testErrors.len - 1
 
       for errIdx in startIdx..endIdx:
         if errs.len > 0:
