@@ -43,11 +43,9 @@ proc newJsonOutputFormatter*(stream: Stream): <//>JsonOutputFormatter =
     testErrors: @[],
     testStackTrace: "",
   )
-  echo "original result: ", %result.result
 
 proc close*(formatter: JsonOutputFormatter) =
   ## Completes the report and closes the underlying stream.
-  # echo "errors: ", formatter.testErrors
   formatter.stream.write($(%formatter.result))
   formatter.stream.close()
 
@@ -62,9 +60,6 @@ method failureOccurred(formatter: JsonOutputFormatter,
                        checkpoints: seq[string], stackTrace: string) =
   ## ``stackTrace`` is provided only if the failure occurred due to an
   ## exception. ``checkpoints`` is never ``nil``.
-  echo "Test Failed"
-  echo "\tcheckpoints: ", checkpoints
-  echo "\tstackTrace: ", stackTrace
   formatter.testErrors.add(checkpoints)
   if stackTrace.len > 0:
     formatter.testStackTrace = stackTrace
@@ -96,21 +91,15 @@ method testEnded(formatter: JsonOutputFormatter, testResult: TestResult) =
           errs.add("\n")
         errs.add(formatter.testErrors[errIdx])
 
-    echo "Summary"
     if formatter.testStackTrace.len > 0:
       jsonTestResult = JsonTestResult(
         name: testResult.testName,
         status: ERROR,
         message: fmt"{failureMsg}\n{formatter.testStackTrace}"
       )
-      echo "\tfailureMsg: ", failureMsg
-      echo "\ttestStackTrace: ", formatter.testStackTrace
       if errs.len > 0:
-        echo "\terrs: ", errs
         jsonTestResult.message.insert(errs & "\n")
     else:
-      echo "\tfailureMsg: ", failureMsg
-      echo "\terrs: ", errs
       jsonTestResult = JsonTestResult(
         name: testResult.testName,
         status: FAIL,
