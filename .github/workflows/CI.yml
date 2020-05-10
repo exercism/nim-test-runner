@@ -25,4 +25,4 @@ jobs:
     
     # Runs a single command using the runners shell
     - name: Test test-runner
-      run: "nim c -r --styleCheck:error --hint[Processing]:off nim-test-runner/tests/t*.nim prepareFiles:: run::"
+      run: "nim c -r --styleCheck:error --hint[Processing]:off tests/t*.nim prepareFiles:: run::"
