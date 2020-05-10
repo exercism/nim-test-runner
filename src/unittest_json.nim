@@ -38,10 +38,10 @@ proc newJsonOutputFormatter*(stream: Stream): <//>JsonOutputFormatter =
   ## because the formatter has no way to know when all tests are finished.
   ## You should invoke formatter.close() to finalize the report.
   result = JsonOutputFormatter(
-    result: ResultJson(tests: @[], status: PASS),
     stream: stream,
     testErrors: @[],
     testStackTrace: "",
+    result: ResultJson(tests: @[], status: PASS)
   )
 
 proc close*(formatter: JsonOutputFormatter) =
