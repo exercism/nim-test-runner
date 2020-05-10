@@ -3,12 +3,6 @@
 import json, streams, strformat, unittest
 
 type
-  JsonOutputFormatter = ref object of OutputFormatter
-    stream: Stream
-    testErrors: seq[string]
-    testStackTrace: string
-    result: ResultJson
-
   JsonTestStatus = enum
     PASS = "pass",
     FAIL = "fail",
@@ -20,7 +14,7 @@ type
     case status: JsonTestStatus
     of FAIL, ERROR:
       message: string
-    of PASS: 
+    of PASS:
       discard
 
   ResultJson = ref object
@@ -30,6 +24,12 @@ type
       message: string
     of PASS, FAIL:
       discard
+
+  JsonOutputFormatter = ref object of OutputFormatter
+    stream: Stream
+    testErrors: seq[string]
+    testStackTrace: string
+    result: ResultJson
 
 proc newJsonOutputFormatter*(stream: Stream): <//>JsonOutputFormatter =
   ## Creates a formatter that writes report to the specified stream in
