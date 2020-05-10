@@ -3,33 +3,33 @@
 import json, streams, strformat, unittest
 
 type
-  JsonOutputFormatter* = ref object of OutputFormatter
-    stream*: Stream
-    testErrors*: seq[string]
-    testStackTrace*: string
-    result*: ResultJson
+  JsonOutputFormatter = ref object of OutputFormatter
+    stream: Stream
+    testErrors: seq[string]
+    testStackTrace: string
+    result: ResultJson
     ranFirstTest*: bool
 
-  JsonTestStatus* = enum
+  JsonTestStatus = enum
     PASS = "pass",
     FAIL = "fail",
     ERROR = "error"
 
-  JsonTestResult* = object
-    name*: string
-    output*: string
-    case status*: JsonTestStatus
+  JsonTestResult = object
+    name: string
+    output: string
+    case status: JsonTestStatus
     of FAIL, ERROR:
-      message*: string
+      message: string
     of PASS: 
       discard
 
-  ResultJson* = ref object
-    tests*: seq[JsonTestResult]
-    case status*: JsonTestStatus
+  ResultJson = ref object
+    tests: seq[JsonTestResult]
+    case status: JsonTestStatus
     of ERROR:
       # TODO: Clarify when status is error
-      message*: string
+      message: string
     of PASS, FAIL:
       discard
 
@@ -54,15 +54,15 @@ proc close*(formatter: JsonOutputFormatter) =
   formatter.stream.write($(%formatter.result))
   formatter.stream.close()
 
-method suiteStarted*(formatter: JsonOutputFormatter, suiteName: string) =
+method suiteStarted(formatter: JsonOutputFormatter, suiteName: string) =
   discard
 
-method testStarted*(formatter: JsonOutputFormatter, testName: string) =
+method testStarted(formatter: JsonOutputFormatter, testName: string) =
   formatter.testErrors.setLen(0)
   formatter.testStackTrace.setLen(0)
 
-method failureOccurred*(formatter: JsonOutputFormatter,
-                        checkpoints: seq[string], stackTrace: string) =
+method failureOccurred(formatter: JsonOutputFormatter,
+                       checkpoints: seq[string], stackTrace: string) =
   ## ``stackTrace`` is provided only if the failure occurred due to an
   ## exception. ``checkpoints`` is never ``nil``.
   echo "Test Failed"
@@ -72,7 +72,7 @@ method failureOccurred*(formatter: JsonOutputFormatter,
   if stackTrace.len > 0:
     formatter.testStackTrace = stackTrace
 
-method testEnded*(formatter: JsonOutputFormatter, testResult: TestResult) =
+method testEnded(formatter: JsonOutputFormatter, testResult: TestResult) =
   var jsonTestResult: JsonTestResult
   case testResult.status
   of TestStatus.OK:
@@ -123,5 +123,5 @@ method testEnded*(formatter: JsonOutputFormatter, testResult: TestResult) =
 
   formatter.result.tests.add(jsonTestResult)
 
-method suiteEnded*(formatter: JsonOutputFormatter) =
+method suiteEnded(formatter: JsonOutputFormatter) =
   discard
