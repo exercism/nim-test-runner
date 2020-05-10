@@ -8,7 +8,6 @@ type
     testErrors: seq[string]
     testStackTrace: string
     result: ResultJson
-    ranFirstTest*: bool
 
   JsonTestStatus = enum
     PASS = "pass",
@@ -44,7 +43,6 @@ proc newJsonOutputFormatter*(stream: Stream): <//>JsonOutputFormatter =
     stream: stream,
     testErrors: @[],
     testStackTrace: "",
-    ranFirstTest: false
   )
   echo "original result: ", %result.result
 
