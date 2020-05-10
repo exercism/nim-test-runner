@@ -27,7 +27,6 @@ type
     tests: seq[JsonTestResult]
     case status: JsonTestStatus
     of ERROR:
-      # TODO: Clarify when status is error
       message: string
     of PASS, FAIL:
       discard
