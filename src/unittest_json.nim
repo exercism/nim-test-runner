@@ -82,7 +82,7 @@ method testEnded(formatter: JsonOutputFormatter, testResult: TestResult) =
 
     var errs = ""
     if formatter.testErrors.len > 1:
-      var startIdx = if formatter.testStackTrace.len > 0: 0 else: 1
+      let startIdx = if formatter.testStackTrace.len > 0: 0 else: 1
       let endIdx =
         if formatter.testStackTrace.len > 0:
           formatter.testErrors.len - 2
