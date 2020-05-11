@@ -10,20 +10,20 @@ type
 
   JsonTestResult = object
     name: string
-    output: string
     case status: JsonTestStatus
     of FAIL, ERROR:
       message: string
     of PASS:
       discard
+    output: string
 
   ResultJson = ref object
-    tests: seq[JsonTestResult]
     case status: JsonTestStatus
     of ERROR:
       message: string
     of PASS, FAIL:
       discard
+    tests: seq[JsonTestResult]
 
   JsonOutputFormatter = ref object of OutputFormatter
     stream: Stream
