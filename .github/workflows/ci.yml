@@ -10,4 +10,4 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Test test-runner
-      run: "nim c -r --styleCheck:error --hint[Processing]:off tests/t*.nim prepareFiles:: run::"
+      run: "nim c -r --styleCheck:error --hint[Processing]:off tests/trunner.nim prepareFiles:: run::"
