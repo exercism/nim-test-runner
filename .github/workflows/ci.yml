@@ -4,9 +4,7 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    container:
-      image: nimlang/nim:latest
+    container: nimlang/nim:latest-alpine-slim
 
     steps:
     - uses: actions/checkout@v2
