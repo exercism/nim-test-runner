@@ -5,7 +5,7 @@ jobs:
   job1:
     name: trunner.nim
     runs-on: ubuntu-latest
-    container: nimlang/nim:latest-alpine
+    container: nimlang/nim:latest
 
     steps:
     - uses: actions/checkout@v2
