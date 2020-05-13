@@ -102,7 +102,8 @@ proc run*(testPath: string): int =
   # Use `startProcess` here, not `execCmd`.
   result = -1
 
-  let args = @["c", "-r", "--styleCheck:hint", "--skipUserCfg:on", testPath]
+  let args = @["c", "-r", "--styleCheck:hint", "--skipUserCfg:on",
+               "--verbosity:0", "--hint[Processing]:off", testPath]
 
   var
     p = startProcess("nim", args = args, options = {poStdErrToStdOut, poUsePath})
