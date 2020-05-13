@@ -17,12 +17,12 @@ jobs:
 
     container:
       image: nimlang/nim:latest
-      
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-    
+
     # Runs a single command using the runners shell
     - name: Test test-runner
       run: "nim c -r --styleCheck:error --hint[Processing]:off tests/t*.nim prepareFiles:: run::"
