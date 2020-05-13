@@ -1,0 +1,14 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  job1:
+    name: trunner.nim
+    runs-on: ubuntu-latest
+    container: nimlang/nim:latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Compile and run `tests/trunner.nim`
+      run: "nim c -r --styleCheck:error --hint[Processing]:off tests/trunner.nim"
