@@ -1,10 +1,11 @@
-FROM nimlang/nim:latest AS builder
+FROM nimlang/nim:latest-slim AS builder
 
 COPY src/runner.nim /test-runner/
 WORKDIR /test-runner/
 RUN nim c runner.nim
 
-FROM nimlang/nim:latest-slim
+FROM nimlang/nim:latest-alpine-slim
+RUN apk add --no-cache pcre
 WORKDIR /opt/test-runner/
 COPY --from=builder /test-runner/runner bin/
 COPY . .
