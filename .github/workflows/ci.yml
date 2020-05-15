@@ -10,5 +10,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Compile and run `tests/trunner.nim`
-      run: "nim c -r --styleCheck:error --hint[Processing]:off tests/trunner.nim"
+    - name: Download all nim exercises
+      run: git clone --depth 1 https://github.com/exercism/nim.git
+
+    - name: Build image
+      run: docker build -t nimtestrunner .
+
+    - name: Run image to test all exercises mounted from github repo
+      run: docker run -d -v ${PWD}/nim/:/mnt/nim nimtestrunner
