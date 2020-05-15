@@ -16,4 +16,4 @@ jobs:
       run: docker build -t nimtestrunner .
 
     - name: Run image to test all exercises mounted from github repo
-      run: docker run -d -v ${PWD}/nim/:/mnt/nim nimtestrunner
+      run: docker run -v ${PWD}/nim/:/mnt/nim nimtestrunner
