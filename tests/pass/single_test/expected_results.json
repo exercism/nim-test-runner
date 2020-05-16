@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "tests": [
+    {
+      "name": "say hi",
+      "status": "pass",
+      "output": ""
+    }
+  ]
+}
