@@ -1,4 +1,4 @@
-import critbits, os, osproc, strscans, strutils, unittest
+import critbits, json, os, osproc, strutils, unittest
 import runner
 
 let tmpBase = getTempDir()
@@ -30,14 +30,14 @@ writeFile(conf.inputDir / "hello_world_test.nim", helloWorldTest)
 let tmpDir = createTmpDir()
 let testPath = prepareFiles(conf, tmpDir)
 
-let expectedTestFile = """import streams
+let expectedTestFile = """import streams, unittest_json
 import unittest
 import hello_world
 
 # version 1.1.0
 
-var strm = newFileStream("""" & outputDir / "results.xml" & """", fmWrite)
-let formatter = newJUnitOutputFormatter(strm)
+var strm = newFileStream("""" & outputDir / "results.json" & """", fmWrite)
+let formatter = newJsonOutputFormatter(strm)
 addOutputFormatter(formatter)
 
 suite "Hello World":
@@ -47,14 +47,17 @@ suite "Hello World":
 close(formatter)
 """
 
-const expectedXml = """<?xml version="1.0" encoding="UTF-8"?>
-<testsuites>
-	<testsuite name="Hello World">
-		<testcase name="say hi" time="0.00000310">
-		</testcase>
-	</testsuite>
-</testsuites>
-""".splitLines()
+let expectedJsonContents = """{
+  "status": "pass",
+  "tests": [
+    {
+      "name": "say hi",
+      "status": "pass",
+      "output": ""
+    }
+  ]
+}""".parseJson()
+
 
 suite "prepareFiles":
   let expectedTmpDir = tmpBase / "nim_test_runner"
@@ -71,17 +74,13 @@ suite "prepareFiles":
     check readFile(testPath) == expectedTestFile
 
 suite "run":
+  copyFile(getAppDir().parentDir / "src" / "unittest_json.nim", tmpDir / "unittest_json.nim")
   test "The `run` proc returns an exit code of 0":
     check run(testPath) == 0
 
-  test "The xml output file is as expected":
-    let xmlContents = readFile(conf.outputDir / "results.xml").splitLines()
-    check xmlContents.len == 8
-    for i in 0 .. expectedXml.high:
-      if i != 3:
-        check xmlContents[i] == expectedXml[i]
-    var n: float
-    check xmlContents[3].scanf("""		<testcase name="say hi" time="$f">""", n)
+  test "The `results.json` file is as expected":
+    let jsonContents = parseFile(conf.outputDir / "results.json")
+    check jsonContents == expectedJsonContents
 
 suite "run all":
   let baseDir = getTempDir() / "exercism" / "nim"
@@ -115,10 +114,16 @@ suite "run all":
 
       let tmpDir = createTmpDir()
       let testPath = prepareFiles(conf, tmpDir)
+      copyFile(getAppDir().parentDir / "src" / "unittest_json.nim", tmpDir / "unittest_json.nim")
       discard run(testPath)
-      let xmlPath = conf.outputDir / "results.xml"
-      let xmlContents = readFile(xmlPath)
+      let resultsPath = conf.outputDir / "results.json"
+      let j = parseFile(resultsPath)
+      for test in j["tests"]:
+        check:
+          test["name"].getStr().len > 0
+          test["output"].getStr().len == 0
+          test["status"].getStr() == "pass"
+          test.len == 3
       check:
-        xmlContents.len > 0
-        "failure" notin xmlContents
-      moveFile(xmlPath, conf.outputDir / slugUnder & ".xml")
+        j["status"].getStr() == "pass"
+      moveFile(resultsPath, conf.outputDir / slugUnder & ".json")
