@@ -4,7 +4,7 @@ proc writeHelp =
   echo """Usage:
   runner [slug] [inputDir] [outputDir]
 
-Run the tests for the `slug` exercise in `inputDir` and write `result.xml` to
+Run the tests for the `slug` exercise in `inputDir` and write `result.json` to
 `outputDir`.
 
 Options:
@@ -77,16 +77,16 @@ proc prepareFiles*(conf: Conf, tmpDir: string): string =
   result = tmpDir / testName
   copyFile(conf.inputDir / solName, tmpDir / solName)
 
-  let xmlPath = conf.outputDir / "results.xml"
-  let beforeTests = "var strm = newFileStream(\"" & xmlPath & """", fmWrite)
-let formatter = newJUnitOutputFormatter(strm)
+  let resultsJsonPath = conf.outputDir / "results.json"
+  let beforeTests = "var strm = newFileStream(\"" & resultsJsonPath & """", fmWrite)
+let formatter = newJsonOutputFormatter(strm)
 addOutputFormatter(formatter)
 
 """
   const afterTests = "\nclose(formatter)\n"
 
   var isBeforeFirstSuite = true
-  var editedTestContents = "import streams\n"
+  var editedTestContents = "import streams, unittest_json\n"
 
   for line in lines(conf.inputDir / testName):
     if isBeforeFirstSuite and line.startsWith("suite"):
