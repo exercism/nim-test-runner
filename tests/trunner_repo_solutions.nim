@@ -6,15 +6,20 @@ proc repoSolutions* =
   let outputDir = tmpBase / "nim_test_runner_out/"
 
   suite "Run test-runner on the exercises from `exercism/nim`":
-    let baseDir = getTempDir() / "exercism" / "nim"
-    if not existsDir(baseDir):
-      let cmd = "git clone --depth 1 https://github.com/exercism/nim.git " &
-                baseDir
-      let errC = execCmd(cmd)
-      if errC != 0:
-        echo "Error: failed when running `git clone`"
-        removeDir(baseDir)
-        quit(1)
+    const dockerMountPath = "/mnt/nim"
+    var baseDir = ""
+    if existsDir(dockerMountPath):
+      baseDir = dockerMountPath
+    else:
+      baseDir = getTempDir() / "exercism" / "nim"
+      if not existsDir(baseDir):
+        let cmd = "git clone --depth 1 https://github.com/exercism/nim.git " &
+                  baseDir
+        let errC = execCmd(cmd)
+        if errC != 0:
+          echo "Error: failed when running `git clone`"
+          removeDir(baseDir)
+          quit(1)
 
     var slugs: CritBitTree[void]
 
