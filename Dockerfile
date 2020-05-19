@@ -9,5 +9,4 @@ RUN apk add --no-cache pcre
 WORKDIR /opt/test-runner/
 COPY --from=builder /test-runner/runner bin/
 COPY . .
-RUN chmod +x bin/run.sh
 ENTRYPOINT nim c -r --styleCheck:error --hint[Processing]:off --hint[CC]:off -d:repoSolutions tests/trunner.nim
