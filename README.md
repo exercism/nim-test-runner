@@ -1,2 +1,2 @@
-# Nim Test Runner for Execersim 
-A test runner for Execerism v3 to programtically test user's solution and report status for in-browser coding.
+# Nim Test Runner for Exercism 
+A test runner for Exercism v3 to programatically test a user's solution and report status for in-browser coding.
