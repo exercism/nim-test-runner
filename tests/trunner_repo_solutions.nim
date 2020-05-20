@@ -54,3 +54,6 @@ proc repoSolutions* =
         check:
           j["status"].getStr() == "pass"
         moveFile(resultsPath, conf.outputDir / slugUnder & ".json")
+
+when isMainModule:
+  repoSolutions()
