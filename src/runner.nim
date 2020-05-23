@@ -95,6 +95,8 @@ addOutputFormatter(formatter)
     editedTestContents &= line & '\n'
   editedTestContents &= afterTests
   writeFile(result, editedTestContents)
+  copyFile(getAppDir().parentDir() / "src" / "unittest_json.nim",
+           tmpDir / "unittest_json.nim")
   createDir(conf.outputDir)
 
 proc run*(testPath: string): int =
