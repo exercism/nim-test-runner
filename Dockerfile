@@ -1,4 +1,4 @@
-FROM nimlang/nim:latest AS builder
+FROM nimlang/nim:latest-alpine-slim AS builder
 
 COPY src/runner.nim /test-runner/
 WORKDIR /test-runner/
