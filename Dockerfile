@@ -2,7 +2,7 @@ FROM nimlang/nim:latest AS builder
 
 COPY src/runner.nim /test-runner/
 WORKDIR /test-runner/
-RUN nim c runner.nim
+RUN nim c -d:release runner.nim
 
 FROM nimlang/nim:latest-alpine-slim
 RUN apk add --no-cache pcre
