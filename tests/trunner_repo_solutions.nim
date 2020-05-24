@@ -36,8 +36,6 @@ suite "repo solutions":
 
       let tmpDir = createTmpDir()
       let testPath = prepareFiles(conf, tmpDir)
-      copyFile(getAppDir().parentDir / "src" / "unittest_json.nim",
-               tmpDir / "unittest_json.nim")
       discard run(testPath)
       let resultsPath = conf.outputDir / "results.json"
       let j = parseFile(resultsPath)

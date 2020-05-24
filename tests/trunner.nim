@@ -36,9 +36,6 @@ for status in ["pass", "fail", "error"]:
                 outputDir / "results.json")
               check readFile(testPath) == expectedHelloWorldTest
 
-          copyFile(getAppDir().parentDir / "src" / "unittest_json.nim",
-                   tmpDir / "unittest_json.nim")
-
           let expectedExitCodeOfRunProc = if status == "pass": 0 else: 1
           test "The `run` proc returns the expected exit code":
             check run(testPath) == expectedExitCodeOfRunProc
