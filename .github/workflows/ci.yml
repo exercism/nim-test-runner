@@ -28,7 +28,7 @@ jobs:
 
     - name: Test bin/run.sh and bin/runner
       run: |
-        docker create --name ntr -it --entrypoint 'bin/run.sh' \
+        docker create --name ntr --entrypoint 'bin/run.sh' \
           exercism/nim-test-runner hello-world /tmp/ /tmp/out/
         docker cp nim/exercises/hello-world/hello_world_test.nim ntr:/tmp/
         docker cp nim/exercises/hello-world/example.nim ntr:/tmp/hello_world.nim
