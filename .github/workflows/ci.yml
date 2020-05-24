@@ -26,5 +26,20 @@ jobs:
     - name: Build image
       run: docker build -t exercism/nim-test-runner .
 
+    - name: Test bin/run.sh and bin/runner
+      run: |
+        docker create --name ntr -it --entrypoint 'bin/run.sh' \
+          exercism/nim-test-runner hello-world /tmp/ /tmp/out/
+        docker cp nim/exercises/hello-world/hello_world_test.nim ntr:/tmp/
+        docker cp nim/exercises/hello-world/example.nim ntr:/tmp/hello_world.nim
+        docker start -a ntr
+        docker commit ntr ntr-after
+        docker rm ntr
+        docker run --rm -it --entrypoint '/bin/cat' ntr-after \
+          '/tmp/out/results.json' > results.json
+        printf '{"status":"pass","tests":[{"name":"say hi","status":"pass","output":""}]}' \
+          > expected_results.json
+        diff results.json expected_results.json
+
     - name: Run image to test all exercises mounted from github repo
       run: docker run -v ${PWD}/nim/:/mnt/nim exercism/nim-test-runner
