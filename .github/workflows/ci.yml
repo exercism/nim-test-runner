@@ -35,7 +35,7 @@ jobs:
         docker start -a ntr
         docker commit ntr ntr-after
         docker rm ntr
-        docker run --rm -it --entrypoint '/bin/cat' ntr-after \
+        docker run --rm --entrypoint '/bin/cat' ntr-after \
           '/tmp/out/results.json' > results.json
         printf '{"status":"pass","tests":[{"name":"say hi","status":"pass","output":""}]}' \
           > expected_results.json
