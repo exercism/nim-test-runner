@@ -7,4 +7,5 @@ RUN apk add --no-cache pcre
 WORKDIR /opt/test-runner/
 COPY --from=builder /tmp/runner bin/
 COPY . .
-ENTRYPOINT nim c -r --styleCheck:error --hint[Processing]:off --hint[CC]:off -d:repoSolutions tests/trunner.nim
+ENTRYPOINT ["nim", "c", "-r", "--styleCheck:error", "--hint[Processing]:off", \
+            "--hint[CC]:off", "-d:repoSolutions", "tests/trunner.nim"]
