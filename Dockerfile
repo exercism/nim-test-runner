@@ -6,6 +6,7 @@ FROM nimlang/nim:latest-alpine-slim
 RUN apk add --no-cache pcre
 WORKDIR /opt/test-runner/
 COPY --from=builder /build/runner bin/
-COPY . .
+COPY bin/run.sh bin/
+COPY src/unittest_json.nim src/
 ENTRYPOINT ["nim", "c", "-r", "--styleCheck:error", "--hint[Processing]:off", \
             "--hint[CC]:off", "-d:repoSolutions", "tests/trunner.nim"]
