@@ -44,5 +44,5 @@ jobs:
         docker create --rm --name ntr exercism/nim-test-runner
         docker cp src/runner.nim ntr:/opt/test-runner/src/
         docker cp tests/ ntr:/opt/test-runner/tests/
-        docker cp nim/ ntr:/opt/test-runner/nim/
+        docker cp nim/ ntr:/tmp/exercism-nim/
         docker start -a ntr
