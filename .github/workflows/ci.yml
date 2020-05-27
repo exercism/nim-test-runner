@@ -12,3 +12,27 @@ jobs:
 
     - name: Compile and run `tests/trunner.nim`
       run: "nim c -r --styleCheck:error --hint[Processing]:off tests/trunner.nim"
+
+  job2:
+    name: Docker - build image and run
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Download all `exercism/nim` exercises
+      run: git clone --depth 1 https://github.com/exercism/nim.git
+
+    - name: Build image
+      run: docker build -t exercism/nim-test-runner .
+
+    - name: Run tests inside container (including for exercises from `exercism/nim`)
+      run: |
+        # Create a container from the image we built, using the `ENTRYPOINT`
+        # defined in the Dockerfile.
+        docker create --rm --name ntr exercism/nim-test-runner
+        # Copy the required files and run the tests.
+        docker cp src/runner.nim ntr:/opt/test-runner/src/
+        docker cp tests/ ntr:/opt/test-runner/tests/
+        docker cp nim/ ntr:/tmp/exercism-nim/
+        docker start -a ntr
