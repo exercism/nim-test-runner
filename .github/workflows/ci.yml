@@ -26,6 +26,29 @@ jobs:
     - name: Build image
       run: docker build -t exercism/nim-test-runner .
 
+    - name: Smoke test the image (using the `bin/run.sh` production interface)
+      run: |
+        # Create a container named `ntr` from the image we built, but override
+        # the `ENTRYPOINT` such that starting the container will test
+        # `bin/run.sh` as used in production. Note that the arguments to
+        # `bin/run.sh` must come after the image name.
+        docker create --name ntr --entrypoint 'bin/run.sh' \
+          exercism/nim-test-runner hello-world /tmp/ /tmp/out/
+        # Copy an exercise solution and test file from the `exercism/nim` repo.
+        docker cp nim/exercises/hello-world/hello_world_test.nim ntr:/tmp/
+        docker cp nim/exercises/hello-world/example.nim ntr:/tmp/hello_world.nim
+        # Start the container. The runner runs the `hello-world` test.
+        docker start -a ntr
+        # Copy the runner's JSON output from the container to the host.
+        docker cp ntr:/tmp/out/results.json results.json
+        # Remove the container.
+        docker rm ntr
+        # Write the expected output (which does not contain a newline).
+        printf '{"status":"pass","tests":[{"name":"say hi","status":"pass","output":""}]}' \
+          > expected_results.json
+        # Fail if the output JSON is not as expected.
+        diff results.json expected_results.json
+
     - name: Run tests inside container (including for exercises from `exercism/nim`)
       run: |
         # Create a container from the image we built, using the `ENTRYPOINT`
