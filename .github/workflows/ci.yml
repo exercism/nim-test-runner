@@ -20,13 +20,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Download all nim exercises
+    - name: Download all `exercism/nim` exercises
       run: git clone --depth 1 https://github.com/exercism/nim.git
 
     - name: Build image
       run: docker build -t exercism/nim-test-runner .
 
-    - name: Test bin/run.sh and bin/runner
+    - name: Test `bin/run.sh` and `bin/runner`
       run: |
         # Create a container named `ntr` from the image we built, but override
         # the `ENTRYPOINT` such that starting the container will test
@@ -49,7 +49,7 @@ jobs:
         # Fail if the output JSON is not as expected.
         diff results.json expected_results.json
 
-    - name: Run tests inside container (including for exercises from exercism/nim)
+    - name: Run tests inside container (including for exercises from `exercism/nim`)
       run: |
         # Create a container from the image we built, using the `ENTRYPOINT`
         # defined in the Dockerfile.
