@@ -26,7 +26,7 @@ jobs:
     - name: Build image
       run: docker build -t exercism/nim-test-runner .
 
-    - name: Test `bin/run.sh` and `bin/runner`
+    - name: Smoke test the image (using the `bin/run.sh` production interface)
       run: |
         # Create a container named `ntr` from the image we built, but override
         # the `ENTRYPOINT` such that starting the container will test
