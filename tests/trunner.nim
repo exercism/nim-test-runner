@@ -58,3 +58,7 @@ for status in ["pass", "fail", "error"]:
               else:
                 echo "Missing: " & pathExpectedResultsJson
               fail()
+
+when defined(repoSolutions):
+  import trunner_repo_solutions
+  repoSolutions()
