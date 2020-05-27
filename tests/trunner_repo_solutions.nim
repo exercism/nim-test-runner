@@ -6,7 +6,7 @@ proc repoSolutions* =
   let outputDir = tmpBase / "nim_test_runner_out/"
 
   suite "Run test-runner on the exercises from `exercism/nim`":
-    let baseDir = getTempDir() / "exercism" / "nim"
+    let baseDir = getTempDir() / "exercism-nim"
     if not existsDir(baseDir):
       let cmd = "git clone --depth 1 https://github.com/exercism/nim.git " &
                 baseDir
