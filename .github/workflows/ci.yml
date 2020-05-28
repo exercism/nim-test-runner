@@ -10,27 +10,27 @@ on:
 jobs:
   job1:
     name: trunner.nim
-    runs-on: ubuntu-latest
-    container: nimlang/nim:latest
+    runs-on: ubuntu-18.04
+    container: nimlang/nim:1.2.0-ubuntu-regular@sha256:8b01cd35ed76c96a0a1e95113adf1a641c490a30918ea52aed4852830ad0939c
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@aabbfeb2ce60b5bd82389903509092c4648a9713 # v2.2.0
 
     - name: Compile and run `tests/trunner.nim`
       run: "nim c -r --styleCheck:error --hint[Processing]:off tests/trunner.nim"
 
   job2:
     name: Docker - build image and run
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@aabbfeb2ce60b5bd82389903509092c4648a9713 # v2.2.0
 
     - name: Download all `exercism/nim` exercises
       run: git clone --depth 1 https://github.com/exercism/nim.git
 
     - name: Build image
-      run: docker build -t exercism/nim-test-runner .
+      run: docker build -t exercism/nim-test-runner:1.2.0 .
 
     - name: Smoke test the image (using the `bin/run.sh` production interface)
       run: |
@@ -39,7 +39,7 @@ jobs:
         # `bin/run.sh` as used in production. Note that the arguments to
         # `bin/run.sh` must come after the image name.
         docker create --name ntr --entrypoint 'bin/run.sh' \
-          exercism/nim-test-runner hello-world /tmp/ /tmp/out/
+          exercism/nim-test-runner:1.2.0 hello-world /tmp/ /tmp/out/
         # Copy an exercise solution and test file from the `exercism/nim` repo.
         docker cp nim/exercises/hello-world/hello_world_test.nim ntr:/tmp/
         docker cp nim/exercises/hello-world/example.nim ntr:/tmp/hello_world.nim
@@ -59,7 +59,7 @@ jobs:
       run: |
         # Create a container from the image we built, using the `ENTRYPOINT`
         # defined in the Dockerfile.
-        docker create --rm --name ntr exercism/nim-test-runner
+        docker create --rm --name ntr exercism/nim-test-runner:1.2.0
         # Copy the required files and run the tests.
         docker cp src/runner.nim ntr:/opt/test-runner/src/
         docker cp tests/ ntr:/opt/test-runner/tests/
