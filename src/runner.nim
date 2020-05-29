@@ -82,21 +82,31 @@ proc prepareFiles*(conf: Conf, tmpDir: string): string =
 let formatter = newJsonOutputFormatter(strm)
 addOutputFormatter(formatter)
 
+injectCode """" & slugUnder & """.nim":
+  proc debug(x: varargs[string, `$`]) =
+    for i in x:
+      writeFile("""" & conf.outputDir & """output.txt", i)
+
 """
   const afterTests = "\nclose(formatter)\n"
 
   var isBeforeFirstSuite = true
-  var editedTestContents = "import streams, unittest_json\n"
+  var editedTestContents = "import streams, unittest_json, code_injection\n"
 
   for line in lines(conf.inputDir / testName):
     if isBeforeFirstSuite and line.startsWith("suite"):
       isBeforeFirstSuite = false
       editedTestContents &= beforeTests
+    elif slugUnder in line: # all nim exercises import the solution as the only module on the line
+      continue
     editedTestContents &= line & '\n'
   editedTestContents &= afterTests
+  echo editedTestContents
   writeFile(result, editedTestContents)
   copyFile(getAppDir().parentDir() / "src" / "unittest_json.nim",
            tmpDir / "unittest_json.nim")
+  copyFile(getAppDir().parentDir() / "src" / "code_injection.nim",
+           tmpDir / "code_injection.nim")
   createDir(conf.outputDir)
 
 proc run*(testPath: string): int =
