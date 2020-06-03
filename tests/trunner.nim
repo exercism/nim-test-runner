@@ -53,7 +53,7 @@ for status in ["pass", "fail", "error"]:
                 fail()
             else:
               when defined(writeJson):
-                writeFile(pathExpectedResultsJson, resultsJson.pretty())
+                writeFile(pathExpectedResultsJson, resultsJson.pretty() & '\n')
                 echo "Wrote: " & pathExpectedResultsJson
               else:
                 echo "Missing: " & pathExpectedResultsJson
