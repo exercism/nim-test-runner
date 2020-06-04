@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "tests": [
+    {
+      "name": "identity function of 1",
+      "status": "pass",
+      "output": ""
+    },
+    {
+      "name": "identity function of 2",
+      "status": "pass",
+      "output": ""
+    },
+    {
+      "name": "identity function of 3",
+      "status": "pass",
+      "output": ""
+    }
+  ]
+}
