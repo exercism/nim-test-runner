@@ -1,0 +1,21 @@
+{
+  "status": "fail",
+  "tests": [
+    {
+      "name": "identity function of 1",
+      "status": "pass",
+      "output": ""
+    },
+    {
+      "name": "identity function of 2",
+      "status": "pass",
+      "output": ""
+    },
+    {
+      "name": "identity function of 3",
+      "status": "fail",
+      "message": "/tmp/nim_test_runner/identity_test.nim(17, 22): Check failed: identity(3) == 3000\\nidentity(3) was 3",
+      "output": ""
+    }
+  ]
+}
