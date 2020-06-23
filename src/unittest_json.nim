@@ -97,7 +97,7 @@ method testEnded(formatter: JsonOutputFormatter, testResult: TestResult) =
     if formatter.testStackTrace.len > 0:
       jsonTestResult = JsonTestResult(
         name: testResult.testName,
-        status: FAIL,
+        status: ERROR,
         message: fmt"{failureMsg}\n{formatter.testStackTrace}"
       )
       if errs.len > 0:
