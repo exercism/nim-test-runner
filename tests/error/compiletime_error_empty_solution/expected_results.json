@@ -1,0 +1,5 @@
+{
+  "status": "error",
+  "message": "/tmp/nim_test_runner/identity_test.nim(9, 7) template/generic instantiation of `suite` from here\n/tmp/nim_test_runner/identity_test.nim(10, 8) template/generic instantiation of `test` from here\n/tmp/nim_test_runner/identity_test.nim(11, 11) Error: undeclared identifier: 'identity'\n",
+  "tests": []
+}
