@@ -1,0 +1,5 @@
+{
+  "status": "error",
+  "message": "Error: internal error: getTypeDescAux(tyEmpty)\nNo stack traceback available\nTo create a stacktrace, rerun compilation with ./koch temp c <file>\n",
+  "tests": []
+}
