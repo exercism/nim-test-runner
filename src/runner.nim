@@ -1,4 +1,4 @@
-import os, osproc, parseopt, streams, strutils, terminal
+import os, osproc, parseopt, strutils, terminal
 
 proc writeHelp =
   echo """Usage:
@@ -125,25 +125,10 @@ proc prepareFiles*(paths: Paths) =
 
 proc run*(paths: Paths): int =
   ## Compiles and runs the file in `testPath`. Returns its exit code.
-  # Use `startProcess` here, not `execCmd`.
-  result = -1
-
-  let args = @["c", "-r", "--styleCheck:hint", "--skipUserCfg:on",
-               "--verbosity:0", "--hint[Processing]:off", paths.tmpTest]
-
-  var
-    p = startProcess("nim", args = args, options = {poStdErrToStdOut, poUsePath})
-    outp = outputStream(p)
-    line = newStringOfCap(120).TaintedString
-
-  while true:
-    if outp.readLine(line):
-      stdout.writeLine(line)
-    else:
-      result = peekExitCode(p)
-      if result != -1:
-        break
-  close(p)
+  let (_, exitCode) = execCmdEx("nim c -r --styleCheck:hint --skipUserCfg:on " &
+                                "--verbosity:0 --hint[Processing]:off " &
+                                paths.tmpTest)
+  result = exitCode
 
 when isMainModule:
   let conf = parseCmdLine()
