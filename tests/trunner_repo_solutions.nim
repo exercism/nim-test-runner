@@ -35,11 +35,10 @@ proc repoSolutions* =
                         inputDir: slugDir,
                         outputDir: outputDir)
 
-        let tmpDir = createTmpDir()
-        let testPath = prepareFiles(conf, tmpDir)
-        discard run(testPath)
-        let resultsPath = conf.outputDir / "results.json"
-        let j = parseFile(resultsPath)
+        let paths = getPaths(conf)
+        prepareFiles(paths)
+        discard run(paths)
+        let j = parseFile(paths.outResults)
         for test in j["tests"]:
           check:
             test["name"].getStr().len > 0
@@ -48,7 +47,7 @@ proc repoSolutions* =
             test.len == 3
         check:
           j["status"].getStr() == "pass"
-        moveFile(resultsPath, conf.outputDir / slugUnder & ".json")
+        moveFile(paths.outResults, conf.outputDir / slugUnder & ".json")
 
 when isMainModule:
   repoSolutions()

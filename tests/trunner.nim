@@ -2,6 +2,7 @@ import json, os, strutils, unittest
 import runner
 
 let tmpBase = getTempDir()
+let expectedTmpDir = tmpBase / "nim_test_runner"
 let outputDir = tmpBase / "nim_test_runner_out/"
 
 for status in ["pass", "fail", "error"]:
@@ -17,30 +18,27 @@ for status in ["pass", "fail", "error"]:
           removeDir(conf.outputDir)
           createDir(conf.outputDir)
 
-          let tmpDir = createTmpDir()
-          let testPath = prepareFiles(conf, tmpDir)
+          let paths = getPaths(conf)
+          test "getPaths: The test path is as expected":
+            check paths.tmpTest == expectedTmpDir / slugUnder & "_test.nim"
 
-          test "prepareFiles: Copies the input solution; Returns the test path":
-            check tmpDir == tmpBase / "nim_test_runner"
-            check testPath == tmpDir / slugUnder & "_test.nim"
-            let solNameAndExt = slugUnder & ".nim"
-            let tmpSolutionContents = readFile(tmpDir / solNameAndExt)
-            let origSolutionContents = readFile(conf.inputDir / solNameAndExt)
-            check tmpSolutionContents == origSolutionContents
+          prepareFiles(paths)
+          test "prepareFiles: Copies the input solution":
+            check readFile(paths.tmpSol) == readFile(paths.inputSol)
 
           if slug == "hello-world" and status == "pass":
             test "prepareFiles: The `hello_world` test file is as expected":
               let f = readFile(conf.inputDir / "expected_hello_world_test_prepared.nim")
               let expectedHelloWorldTest = f.replace(
                 "trunner_replaces_this_with_path_to_results_json",
-                outputDir / "results.json")
-              check readFile(testPath) == expectedHelloWorldTest
+                paths.outResults)
+              check readFile(paths.tmpTest) == expectedHelloWorldTest
 
           let expectedExitCodeOfRunProc = if status == "pass": 0 else: 1
           test "The `run` proc returns the expected exit code":
-            check run(testPath) == expectedExitCodeOfRunProc
+            check run(paths) == expectedExitCodeOfRunProc
 
-          let resultsJson = parseFile(conf.outputDir / "results.json")
+          let resultsJson = parseFile(paths.outResults)
           let pathExpectedResultsJson = path / "expected_results.json"
           test "The `results.json` file is as expected":
             if existsFile(pathExpectedResultsJson):

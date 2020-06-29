@@ -62,23 +62,43 @@ proc parseCmdLine: Conf =
   if not existsDir(result.inputDir):
     writeErrorMsg("the inputDir '" & result.inputDir & "' does not exist")
 
-proc createTmpDir*: string =
+proc createTmpDir: string =
   ## Returns the path of a temporary directory.
   result = getTempDir() / "nim_test_runner"
   removeDir(result)
   createDir(result)
 
-proc prepareFiles*(conf: Conf, tmpDir: string): string =
-  ## Returns the path of the edited test file.
+type
+  Paths* = object
+    inputSol*: string
+    inputTest*: string
+    unittestJson*: string
+    tmpSol*: string
+    tmpTest*: string
+    tmpUnittestJson*: string
+    outResults*: string
+
+proc getPaths*(conf: Conf): Paths =
   let
     slugUnder = conf.slug.replace("-", "_")
-    solName = slugUnder & ".nim" # e.g. "hello_world.nim"
+    solName = slugUnder & ".nim"       # e.g. "hello_world.nim"
     testName = slugUnder & "_test.nim" # e.g. "hello_world_test.nim"
-  result = tmpDir / testName
-  copyFile(conf.inputDir / solName, tmpDir / solName)
+    tmpDir = createTmpDir()
+  result = Paths(
+    inputSol: conf.inputDir / solName,
+    inputTest: conf.inputDir / testName,
+    unittestJson: getAppDir().parentDir() / "src" / "unittest_json.nim",
+    tmpSol: tmpDir / solName,
+    tmpTest: tmpDir / testName,
+    tmpUnittestJson: tmpDir / "unittest_json.nim",
+    outResults: conf.outputDir / "results.json",
+  )
 
-  let resultsJsonPath = conf.outputDir / "results.json"
-  let beforeTests = "var strm = newFileStream(\"" & resultsJsonPath & """", fmWrite)
+proc copyEditedTest(paths: Paths) =
+  ## Reads the student's test file in `paths.inputTest`, adds code so that it
+  ## uses our JSON output formatter, and writes the result to `paths.tmpTest`.
+  let beforeTests =
+    "var strm = newFileStream(\"" & paths.outResults & """", fmWrite)
 let formatter = newJsonOutputFormatter(strm)
 addOutputFormatter(formatter)
 
@@ -88,24 +108,28 @@ addOutputFormatter(formatter)
   var isBeforeFirstSuite = true
   var editedTestContents = "import streams, unittest_json\n"
 
-  for line in lines(conf.inputDir / testName):
+  for line in lines(paths.inputTest):
     if isBeforeFirstSuite and line.startsWith("suite"):
       isBeforeFirstSuite = false
       editedTestContents &= beforeTests
     editedTestContents &= line & '\n'
   editedTestContents &= afterTests
-  writeFile(result, editedTestContents)
-  copyFile(getAppDir().parentDir() / "src" / "unittest_json.nim",
-           tmpDir / "unittest_json.nim")
-  createDir(conf.outputDir)
+  writeFile(paths.tmpTest, editedTestContents)
 
-proc run*(testPath: string): int =
+proc prepareFiles*(paths: Paths) =
+  ## Writes the necessary files to the directory that we use to run the tests.
+  createDir(paths.outResults.parentDir())
+  copyFile(paths.inputSol, paths.tmpSol)
+  copyEditedTest(paths)
+  copyFile(paths.unittestJson, paths.tmpUnittestJson)
+
+proc run*(paths: Paths): int =
   ## Compiles and runs the file in `testPath`. Returns its exit code.
   # Use `startProcess` here, not `execCmd`.
   result = -1
 
   let args = @["c", "-r", "--styleCheck:hint", "--skipUserCfg:on",
-               "--verbosity:0", "--hint[Processing]:off", testPath]
+               "--verbosity:0", "--hint[Processing]:off", paths.tmpTest]
 
   var
     p = startProcess("nim", args = args, options = {poStdErrToStdOut, poUsePath})
@@ -123,6 +147,6 @@ proc run*(testPath: string): int =
 
 when isMainModule:
   let conf = parseCmdLine()
-  let tmpDir = createTmpDir()
-  let testPath = prepareFiles(conf, tmpDir)
-  discard run(testPath)
+  let paths = getPaths(conf)
+  prepareFiles(paths)
+  discard run(paths)
