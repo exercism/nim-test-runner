@@ -94,6 +94,13 @@ proc getPaths*(conf: Conf): Paths =
     outResults: conf.outputDir / "results.json",
   )
 
+proc writeTopLevelErrorJson(path: string, message: string) =
+  ## Writes to `path` a JSON file that has a top-level error status, and a
+  ## top-level message of `message`.
+  let contents = """{"status": "error", "message": """" & message &
+                 """", "tests": []}"""
+  writeFile(path, contents)
+
 proc copyEditedTest(paths: Paths) =
   ## Reads the student's test file in `paths.inputTest`, adds code so that it
   ## uses our JSON output formatter, and writes the result to `paths.tmpTest`.
@@ -125,10 +132,18 @@ proc prepareFiles*(paths: Paths) =
 
 proc run*(paths: Paths): int =
   ## Compiles and runs the file in `testPath`. Returns its exit code.
-  let (_, exitCode) = execCmdEx("nim c -r --styleCheck:hint --skipUserCfg:on " &
-                                "--verbosity:0 --hint[Processing]:off " &
-                                paths.tmpTest)
-  result = exitCode
+  let (compMsgs, exitCode1) = execCmdEx("nim c --styleCheck:hint " &
+                                        "--skipUserCfg:on --verbosity:0 " &
+                                        "--hint[Processing]:off " &
+                                        paths.tmpTest)
+
+  if exitCode1 != 0:
+    writeTopLevelErrorJson(paths.outResults, compMsgs)
+    return exitCode1
+
+  let compiledTestPath = paths.tmpTest[0..^5] # Remove `.nim` file extension
+  let (_, exitCode2) = execCmdEx(compiledTestPath)
+  result = exitCode2
 
 when isMainModule:
   let conf = parseCmdLine()
