@@ -1,9 +1,9 @@
-FROM nimlang/nim:1.2.2-alpine-slim@sha256:1addf585b1f807991f375b4c9cc54df930b763af4155833087a8b84f7ac9c839 \
+FROM nimlang/nim:1.2.4-alpine-slim@sha256:9afaf7c89c44e5200620e3697e15330de32dbc7ac0fd3f0c99ed13cf185b9c30 \
      AS builder
 COPY src/runner.nim /build/
 RUN nim c -d:release /build/runner.nim
 
-FROM nimlang/nim:1.2.2-alpine-slim@sha256:1addf585b1f807991f375b4c9cc54df930b763af4155833087a8b84f7ac9c839
+FROM nimlang/nim:1.2.4-alpine-slim@sha256:9afaf7c89c44e5200620e3697e15330de32dbc7ac0fd3f0c99ed13cf185b9c30
 RUN apk add --no-cache pcre
 WORKDIR /opt/test-runner/
 COPY --from=builder /build/runner bin/
