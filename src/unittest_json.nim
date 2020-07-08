@@ -53,6 +53,7 @@ method suiteStarted(formatter: JsonOutputFormatter, suiteName: string) =
   discard
 
 method testStarted(formatter: JsonOutputFormatter, testName: string) =
+  echo "Test started: " & testName
   formatter.testErrors.setLen(0)
   formatter.testStackTrace.setLen(0)
 
@@ -65,6 +66,7 @@ method failureOccurred(formatter: JsonOutputFormatter,
     formatter.testStackTrace = stackTrace
 
 method testEnded(formatter: JsonOutputFormatter, testResult: TestResult) =
+  echo "Test finished: " & testResult.testName
   var jsonTestResult: JsonTestResult
   case testResult.status
   of TestStatus.OK:
