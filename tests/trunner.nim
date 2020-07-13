@@ -42,7 +42,7 @@ for status in ["pass", "fail", "error"]:
           let resultsJson = parseFile(paths.outResults)
           let pathExpectedResultsJson = path / "expected_results.json"
           test "The `results.json` file is as expected":
-            if existsFile(pathExpectedResultsJson):
+            if fileExists(pathExpectedResultsJson):
               let expectedResultsJson = parseFile(pathExpectedResultsJson)
               if resultsJson != expectedResultsJson:
                 echo "\nresults.json:"
