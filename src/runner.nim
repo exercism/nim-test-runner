@@ -1,4 +1,4 @@
-import json, os, osproc, parseopt, strutils, terminal
+import json, os, osproc, parseopt, parseutils, sequtils, strutils, terminal
 
 proc writeHelp =
   echo """Usage:
@@ -21,6 +21,12 @@ type
     slug*: string
     inputDir*: string
     outputDir*: string
+
+  TestOutput = object
+    name, output: string
+
+  SubmissionOutput = object
+    tests: seq[TestOutput]
 
 proc parseCmdLine: Conf =
   ## Checks the command-line arguments and returns them if they are in the
@@ -130,7 +136,37 @@ proc prepareFiles*(paths: Paths) =
   copyEditedTest(paths)
   copyFile(paths.unittestJson, paths.tmpUnittestJson)
 
-proc run*(paths: Paths): int =
+proc extractTestName(text: string): string =
+  text.captureBetween(' ', '\n')
+
+proc extractOutput(text: string): string =
+  var output: string
+  discard text.parseUntil(output, "Test finished: ", text.skipUntil('\n'))
+  result = output
+
+proc extractTestOutput(text: string): TestOutput =
+  let temp = text.extractOutput
+  TestOutput(
+    name: text.extractTestName,
+    output: if temp.len > 3: temp[1..^2] else: ""
+  )
+
+proc extractSubmissionOutput(runtimeOutput: string): SubmissionOutput =
+  SubmissionOutput(
+    tests: runtimeOutput.split("Test started:")[1..^1]
+                        .mapIt(it.extractTestOutput)
+  )
+
+proc writeOutput*(resultsFileName, runtimeOutput: string) =
+  let testResults = resultsFileName.parseFile.to(ResultJson)
+  let submissionOutput = runtimeOutput.extractSubmissionOutput
+
+  for index, test in submissionOutput.tests:
+    testResults.tests[index].output = test.output
+
+  resultsFileName.writeFile $(%testResults)
+
+proc run*(paths: Paths): tuple[output: string, exitCode: int] =
   ## Compiles and runs the file in `testPath`. Returns its exit code.
   let (compMsgs, exitCode1) = execCmdEx("nim c --styleCheck:hint " &
                                         "--skipUserCfg:on --verbosity:0 " &
@@ -139,14 +175,17 @@ proc run*(paths: Paths): int =
 
   if exitCode1 != 0:
     writeTopLevelErrorJson(paths.outResults, compMsgs)
-    return exitCode1
+    return (output: "", exitCode: exitCode1)
 
   let compiledTestPath = paths.tmpTest[0..^5] # Remove `.nim` file extension
-  let (_, exitCode2) = execCmdEx(compiledTestPath)
-  result = exitCode2
+  let (runtimeOutput, exitCode2) = execCmdEx(compiledTestPath)
+
+  result = (output: runtimeOutput, exitCode: exitCode2)
 
 when isMainModule:
   let conf = parseCmdLine()
   let paths = getPaths(conf)
   prepareFiles(paths)
-  discard run(paths)
+  let (runtimeOutput, _) = run(paths)
+  if runtimeOutput.len != 0:
+    paths.outResults.writeOutput(runtimeOutput)
