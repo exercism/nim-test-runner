@@ -37,8 +37,10 @@ for status in ["pass", "fail", "error"]:
 
           let expectedExitCodeOfRunProc = if status == "pass": 0 else: 1
           test "The `run` proc returns the expected exit code":
-            check run(paths) == expectedExitCodeOfRunProc
-
+            let (runtimeOutput, exitCode) = run(paths)
+            if runtimeOutput.len != 0:
+              paths.outResults.writeOutput(runtimeOutput)
+            check exitCode == expectedExitCodeOfRunProc
           let resultsJson = parseFile(paths.outResults)
           let pathExpectedResultsJson = path / "expected_results.json"
           test "The `results.json` file is as expected":
