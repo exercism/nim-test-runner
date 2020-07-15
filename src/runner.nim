@@ -158,13 +158,13 @@ proc extractSubmissionOutput(runtimeOutput: string): SubmissionOutput =
   )
 
 proc writeOutput*(resultsFileName, runtimeOutput: string) =
-  let testResults = resultsFileName.parseFile.to(ResultJson)
+  let testResults = parseFile resultsFileName
   let submissionOutput = runtimeOutput.extractSubmissionOutput
 
   for index, test in submissionOutput.tests:
-    testResults.tests[index].output = test.output
+    testResults["tests"][index]["output"] = test.output.newJString()
 
-  resultsFileName.writeFile $(%testResults)
+  resultsFileName.writeFile $testResults
 
 proc run*(paths: Paths): tuple[output: string, exitCode: int] =
   ## Compiles and runs the file in `testPath`. Returns its exit code.
