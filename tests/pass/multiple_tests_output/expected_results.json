@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "tests": [
+    {
+      "name": "identity function of 1",
+      "status": "pass",
+      "output": "stdout here: my input is: 1\nstderr here: my input is: 1"
+    },
+    {
+      "name": "identity function of 2",
+      "status": "pass",
+      "output": "stdout here: my input is: 2\nstderr here: my input is: 2"
+    },
+    {
+      "name": "identity function of 3",
+      "status": "pass",
+      "output": "stdout here: my input is: 3\nstderr here: my input is: 3"
+    }
+  ]
+}
