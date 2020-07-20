@@ -1,4 +1,4 @@
-import json, os, osproc, parseopt, parseutils, sequtils, strutils, terminal
+import json, os, osproc, parseopt, parseutils, sequtils, strutils, terminal, unicode
 
 proc writeHelp =
   echo """Usage:
@@ -145,10 +145,19 @@ proc extractOutput(text: string): string =
   result = output
 
 proc extractTestOutput(text: string): TestOutput =
-  let temp = text.extractOutput
+  const truncatedMessage = "... Output was truncated. Please limit to 500 chars"
+
+  let output = text.extractOutput
+  let strippedOutput =
+    if output.len > 3:
+      if output.runeLen > 500:
+        output[1..^1].runeSubStr(0, 500) & truncatedMessage
+      else: output[1..^1]
+    else:
+      ""
   TestOutput(
     name: text.extractTestName,
-    output: if temp.len > 3: temp[1..^1] else: ""
+    output: strippedOutput
   )
 
 proc extractSubmissionOutput(runtimeOutput: string): SubmissionOutput =
