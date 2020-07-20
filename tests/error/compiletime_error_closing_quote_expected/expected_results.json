@@ -1,0 +1,5 @@
+{
+  "status": "error",
+  "message": "/tmp/nim_test_runner/hello_world.nim(2, 3) Error: closing \" expected\n",
+  "tests": []
+}

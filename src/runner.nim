@@ -1,4 +1,4 @@
-import os, osproc, parseopt, strutils, terminal
+import json, os, osproc, parseopt, strutils, terminal
 
 proc writeHelp =
   echo """Usage:
@@ -97,8 +97,8 @@ proc getPaths*(conf: Conf): Paths =
 proc writeTopLevelErrorJson(path: string, message: string) =
   ## Writes to `path` a JSON file that has a top-level error status, and a
   ## top-level message of `message`.
-  let contents = """{"status": "error", "message": """" & message &
-                 """", "tests": []}"""
+  let contents = """{"status": "error", "message": """ & message.escapeJson() &
+                 """, "tests": []}"""
   writeFile(path, contents)
 
 proc copyEditedTest(paths: Paths) =
