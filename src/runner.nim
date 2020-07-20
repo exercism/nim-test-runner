@@ -148,7 +148,7 @@ proc extractTestOutput(text: string): TestOutput =
   let temp = text.extractOutput
   TestOutput(
     name: text.extractTestName,
-    output: if temp.len > 3: temp[1..^2] else: ""
+    output: if temp.len > 3: temp[1..^1] else: ""
   )
 
 proc extractSubmissionOutput(runtimeOutput: string): SubmissionOutput =

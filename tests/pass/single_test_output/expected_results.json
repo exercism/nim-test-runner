@@ -4,7 +4,7 @@
     {
       "name": "say hi",
       "status": "pass",
-      "output": "stdout here: I have no inputs :(\nstderr here: no inputs :("
+      "output": "stdout here: I have no inputs :(\nstderr here: no inputs :(\n"
     }
   ]
 }
