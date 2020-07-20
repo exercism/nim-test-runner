@@ -4,18 +4,18 @@
     {
       "name": "identity function of 1",
       "status": "pass",
-      "output": "stdout here: my input is: 1\nstderr here: my input is: 1"
+      "output": "stdout here: my input is: 1\nstderr here: my input is: 1\n"
     },
     {
       "name": "identity function of 2",
       "status": "fail",
       "message": "/tmp/nim_test_runner/identity_test.nim(14, 22): Check failed: identity(2) == 2000\\nidentity(2) was 2",
-      "output": "stdout here: my input is: 2\nstderr here: my input is: 2"
+      "output": "stdout here: my input is: 2\nstderr here: my input is: 2\n"
     },
     {
       "name": "identity function of 3",
       "status": "pass",
-      "output": "stdout here: my input is: 3\nstderr here: my input is: 3"
+      "output": "stdout here: my input is: 3\nstderr here: my input is: 3\n"
     }
   ]
 }
