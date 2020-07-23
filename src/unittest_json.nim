@@ -8,22 +8,22 @@ type
     FAIL = "fail",
     ERROR = "error"
 
-  JsonTestResult* = object
-    name*: string
-    case status*: JsonTestStatus
+  JsonTestResult = object
+    name: string
+    case status: JsonTestStatus
     of FAIL, ERROR:
-      message*: string
+      message: string
     of PASS:
       discard
-    output*: string
+    output: string
 
-  ResultJson* = ref object
-    case status*: JsonTestStatus
+  ResultJson = ref object
+    case status: JsonTestStatus
     of ERROR:
-      message*: string
+      message: string
     of PASS, FAIL:
       discard
-    tests*: seq[JsonTestResult]
+    tests: seq[JsonTestResult]
 
   JsonOutputFormatter = ref object of OutputFormatter
     stream: Stream
