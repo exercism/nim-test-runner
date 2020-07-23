@@ -187,9 +187,7 @@ proc run*(paths: Paths): tuple[output: string, exitCode: int] =
     return (output: "", exitCode: exitCode1)
 
   let compiledTestPath = paths.tmpTest[0..^5] # Remove `.nim` file extension
-  let (runtimeOutput, exitCode2) = execCmdEx(compiledTestPath)
-
-  result = (output: runtimeOutput, exitCode: exitCode2)
+  result = execCmdEx(compiledTestPath)
 
 when isMainModule:
   let conf = parseCmdLine()
