@@ -197,4 +197,4 @@ when isMainModule:
   prepareFiles(paths)
   let (runtimeOutput, _) = run(paths)
   if runtimeOutput.len != 0:
-    paths.outResults.writeOutput(runtimeOutput)
+    writeOutput(paths.outResults, runtimeOutput)
