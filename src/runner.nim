@@ -176,7 +176,8 @@ proc writeOutput*(resultsFileName, runtimeOutput: string) =
   resultsFileName.writeFile $testResults
 
 proc run*(paths: Paths): tuple[output: string, exitCode: int] =
-  ## Compiles and runs the file in `testPath`. Returns its exit code.
+  ## Compiles and runs the file in `testPath`. Returns its exit code and the
+  ## run-time output (which is empty if compilation fails).
   let (compMsgs, exitCode1) = execCmdEx("nim c --styleCheck:hint " &
                                         "--skipUserCfg:on --verbosity:0 " &
                                         "--hint[Processing]:off " &
