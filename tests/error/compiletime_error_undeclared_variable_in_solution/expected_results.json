@@ -1,5 +1,5 @@
 {
   "status": "error",
-  "message": "/tmp/nim_test_runner/identity.nim(2, 3) Error: undeclared identifier: 'myUndeclaredVariable'\n",
+  "message": "identity.nim(2, 3) Error: undeclared identifier: 'myUndeclaredVariable'\n",
   "tests": []
 }
