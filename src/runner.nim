@@ -167,7 +167,7 @@ proc extractSubmissionOutput(runtimeOutput: string): SubmissionOutput =
   )
 
 proc writeOutput*(resultsFileName, runtimeOutput: string) =
-  let testResults = parseFile resultsFileName
+  var testResults = parseFile resultsFileName
   let submissionOutput = runtimeOutput.extractSubmissionOutput
 
   for index, test in submissionOutput.tests:
