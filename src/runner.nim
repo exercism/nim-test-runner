@@ -150,7 +150,7 @@ proc extractTestOutput(text: string): TestOutput =
   let output = text.extractOutput
   let strippedOutput =
     if output.len > 3:
-      if output.runeLen > 500:
+      if output[1..^1].runeLen > 500:
         output[1..^1].runeSubStr(0, 500) & truncatedMessage
       else: output[1..^1]
     else:
