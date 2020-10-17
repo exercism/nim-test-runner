@@ -14,7 +14,7 @@
     {
       "name": "identity function of 3",
       "status": "fail",
-      "message": "/tmp/nim_test_runner/identity_test.nim(17, 22): Check failed: identity(3) == 3000\\nidentity(3) was 3",
+      "message": "/tmp/nim_test_runner/test_identity.nim(17, 22): Check failed: identity(3) == 3000\\nidentity(3) was 3",
       "output": ""
     }
   ]
