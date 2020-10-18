@@ -9,7 +9,7 @@ let formatter = newJsonOutputFormatter(strm)
 addOutputFormatter(formatter)
 
 suite "Hello World":
-  test "say hi":
+  test "say hi!":
     check hello() == "Hello, World!"
 
 close(formatter)
