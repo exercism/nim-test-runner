@@ -4,13 +4,14 @@ import runner
 let tmpBase = getTempDir()
 let expectedTmpDir = tmpBase / "nim_test_runner"
 let outputDir = tmpBase / "nim_test_runner_out/"
+const testPrefix = "test_"
 
 for status in ["pass", "fail", "error"]:
   for (kind, path) in walkDir(getAppDir() / status):
     if kind == pcDir:
-      for file in walkFiles(path / "test_*.nim"):
+      for file in walkFiles(path / testPrefix & "*.nim"):
         suite status & '/' & path.splitPath().tail:
-          let slugUnder = file.splitFile().name[0..^6]
+          let slugUnder = file.splitFile().name[testPrefix.len .. ^1]
           let slug = slugUnder.replace('_', '-')
           let conf = Conf(slug: slug,
                           inputDir: path & '/',
@@ -28,7 +29,7 @@ for status in ["pass", "fail", "error"]:
 
           if slug == "hello-world" and status == "pass":
             test "prepareFiles: The `hello_world` test file is as expected":
-              let f = readFile(conf.inputDir / "expected_hello_world_test_prepared.nim")
+              let f = readFile(conf.inputDir / "expected_test_hello_world_prepared.nim")
               let expectedHelloWorldTest = f.replace(
                 "trunner_replaces_this_with_path_to_results_json",
                 paths.outResults)
