@@ -81,8 +81,8 @@ type
 proc getPaths*(conf: Conf): Paths =
   let
     slugUnder = conf.slug.replace("-", "_")
-    solName = slugUnder & ".nim"       # e.g. "hello_world.nim"
-    testName = slugUnder & "_test.nim" # e.g. "hello_world_test.nim"
+    solName = slugUnder & ".nim"            # e.g. "hello_world.nim"
+    testName = "test_" & slugUnder & ".nim" # e.g. "test_hello_world.nim"
     tmpDir = createTmpDir()
   result = Paths(
     inputSol: conf.inputDir / solName,

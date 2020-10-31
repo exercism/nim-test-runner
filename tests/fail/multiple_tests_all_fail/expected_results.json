@@ -4,19 +4,19 @@
     {
       "name": "identity function of 1",
       "status": "fail",
-      "message": "/tmp/nim_test_runner/identity_test.nim(11, 22): Check failed: identity(1) == 1000\\nidentity(1) was 1",
+      "message": "/tmp/nim_test_runner/test_identity.nim(11, 22): Check failed: identity(1) == 1000\\nidentity(1) was 1",
       "output": ""
     },
     {
       "name": "identity function of 2",
       "status": "fail",
-      "message": "/tmp/nim_test_runner/identity_test.nim(14, 22): Check failed: identity(2) == 2000\\nidentity(2) was 2",
+      "message": "/tmp/nim_test_runner/test_identity.nim(14, 22): Check failed: identity(2) == 2000\\nidentity(2) was 2",
       "output": ""
     },
     {
       "name": "identity function of 3",
       "status": "fail",
-      "message": "/tmp/nim_test_runner/identity_test.nim(17, 22): Check failed: identity(3) == 3000\\nidentity(3) was 3",
+      "message": "/tmp/nim_test_runner/test_identity.nim(17, 22): Check failed: identity(3) == 3000\\nidentity(3) was 3",
       "output": ""
     }
   ]

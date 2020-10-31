@@ -8,7 +8,7 @@ let outputDir = tmpBase / "nim_test_runner_out/"
 for status in ["pass", "fail", "error"]:
   for (kind, path) in walkDir(getAppDir() / status):
     if kind == pcDir:
-      for file in walkFiles(path / "*_test.nim"):
+      for file in walkFiles(path / "test_*.nim"):
         suite status & '/' & path.splitPath().tail:
           let slugUnder = file.splitFile().name[0..^6]
           let slug = slugUnder.replace('_', '-')
@@ -20,7 +20,7 @@ for status in ["pass", "fail", "error"]:
 
           let paths = getPaths(conf)
           test "getPaths: The test path is as expected":
-            check paths.tmpTest == expectedTmpDir / slugUnder & "_test.nim"
+            check paths.tmpTest == expectedTmpDir / "test_" & slugUnder & ".nim"
 
           prepareFiles(paths)
           test "prepareFiles: Copies the input solution":
