@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "tests": [
+    {
+      "name": "identity function of 1",
+      "status": "pass",
+      "output": "stderr here: my input is: 1\n"
+    }
+  ]
+}
