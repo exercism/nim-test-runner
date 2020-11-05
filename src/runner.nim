@@ -59,7 +59,7 @@ proc parseCmdLine: Conf =
     writeErrorMsg("inputDir must end in a trailing slash")
   if result.outputDir[^1] != '/':
     writeErrorMsg("outputDir must end in a trailing slash")
-  if not existsDir(result.inputDir):
+  if not dirExists(result.inputDir):
     writeErrorMsg("the inputDir '" & result.inputDir & "' does not exist")
 
 proc createTmpDir: string =
