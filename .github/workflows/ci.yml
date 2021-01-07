@@ -11,7 +11,7 @@ jobs:
   job1:
     name: trunner.nim
     runs-on: ubuntu-18.04
-    container: nimlang/nim:1.4.0-ubuntu-regular@sha256:bf508ba3ba8d3407e52b4dfeaea0748e41cd28bec9a91d1f78b0d43e00cd639a
+    container: nimlang/nim:1.4.2-ubuntu-regular@sha256:884e474195e4facb5a5216b85a8f5f6b957e8d05675e24ffc16e6c4657acc069
 
     steps:
     - uses: actions/checkout@aabbfeb2ce60b5bd82389903509092c4648a9713 # v2.2.0
@@ -30,7 +30,7 @@ jobs:
       run: git clone --depth 1 https://github.com/exercism/nim.git
 
     - name: Build image
-      run: docker build -t exercism/nim-test-runner:1.4.0 .
+      run: docker build -t exercism/nim-test-runner:1.4.2 .
 
     - name: Smoke test the image (using the `bin/run.sh` production interface)
       run: |
@@ -39,7 +39,7 @@ jobs:
         # `bin/run.sh` as used in production. Note that the arguments to
         # `bin/run.sh` must come after the image name.
         docker create --name ntr --entrypoint 'bin/run.sh' \
-          exercism/nim-test-runner:1.4.0 hello-world /tmp/ /tmp/out/
+          exercism/nim-test-runner:1.4.2 hello-world /tmp/ /tmp/out/
         # Copy an exercise solution and test file from the `exercism/nim` repo.
         docker cp nim/exercises/hello-world/test_hello_world.nim ntr:/tmp/
         docker cp nim/exercises/hello-world/example.nim ntr:/tmp/hello_world.nim
@@ -59,7 +59,7 @@ jobs:
       run: |
         # Create a container from the image we built, using the `ENTRYPOINT`
         # defined in the Dockerfile.
-        docker create --rm --name ntr exercism/nim-test-runner:1.4.0
+        docker create --rm --name ntr exercism/nim-test-runner:1.4.2
         # Copy the required files and run the tests.
         docker cp src/runner.nim ntr:/opt/test-runner/src/
         docker cp tests/ ntr:/opt/test-runner/tests/
