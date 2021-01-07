@@ -26,7 +26,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Login to DockerHub
+      - name: Log in to Docker Hub
         uses: docker/login-action@f3364599c6aa293cdc2b8391b1b56d0c30e45c8a # 1.8.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
