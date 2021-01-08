@@ -7,7 +7,7 @@ on:
 jobs:
   multiple-registries:
     if: github.repository_owner == 'exercism' # Stops this job from running on forks.
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     env:
       ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com

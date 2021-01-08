@@ -12,7 +12,7 @@ env:
 jobs:
   job1:
     name: trunner.nim
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
     - uses: actions/checkout@aabbfeb2ce60b5bd82389903509092c4648a9713 # v2.2.0
@@ -35,7 +35,7 @@ jobs:
 
   job2:
     name: Docker - build image and run
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
     - uses: actions/checkout@aabbfeb2ce60b5bd82389903509092c4648a9713 # v2.2.0
