@@ -18,7 +18,7 @@ proc repoSolutions* =
 
     var slugs: CritBitTree[void]
 
-    let exercisesDir = baseDir / "exercises"
+    let exercisesDir = baseDir / "exercises" / "practice"
     for (_, dir) in walkDir(exercisesDir):
       slugs.incl(dir.splitPath().tail)
 
