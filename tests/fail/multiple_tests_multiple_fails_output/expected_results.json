@@ -1,0 +1,22 @@
+{
+  "status": "fail",
+  "tests": [
+    {
+      "name": "identity function of 1",
+      "status": "fail",
+      "message": "/tmp/nim_test_runner/test_identity.nim(11, 22): Check failed: identity(1) == 1000\\nidentity(1) was 1",
+      "output": "stdout here: my input is: 1\nstderr here: my input is: 1\n"
+    },
+    {
+      "name": "identity function of 2",
+      "status": "fail",
+      "message": "/tmp/nim_test_runner/test_identity.nim(14, 22): Check failed: identity(2) == 2000\\nidentity(2) was 2",
+      "output": "stdout here: my input is: 2\nstderr here: my input is: 2\n"
+    },
+    {
+      "name": "identity function of 3",
+      "status": "pass",
+      "output": "stdout here: my input is: 3\nstderr here: my input is: 3\n"
+    }
+  ]
+}
