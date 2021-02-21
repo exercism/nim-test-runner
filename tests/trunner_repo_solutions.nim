@@ -27,7 +27,7 @@ proc repoSolutions* =
       test slug:
         let slugDir = exercisesDir / slug
         let slugUnder = slug.replace('-', '_')
-        let exampleContents = readFile(slugDir / "example.nim")
+        let exampleContents = readFile(slugDir / ".meta" / "example.nim")
         let solutionPath = slugDir / slugUnder & ".nim"
         writeFile(solutionPath, exampleContents)
 
