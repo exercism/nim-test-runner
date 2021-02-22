@@ -5,13 +5,13 @@
     {
       "name": "identity function of 1",
       "status": "fail",
-      "message": "test_identity.nim(11, 22): Check failed: identity(1) == 1000\\nidentity(1) was 1",
+      "message": "test_identity.nim(12, 22): Check failed: identity(1) == 1000\\nidentity(1) was 1",
       "output": ""
     },
     {
       "name": "identity function of 2",
       "status": "fail",
-      "message": "test_identity.nim(14, 22): Check failed: identity(2) == 2000\\nidentity(2) was 2",
+      "message": "test_identity.nim(15, 22): Check failed: identity(2) == 2000\\nidentity(2) was 2",
       "output": ""
     },
     {

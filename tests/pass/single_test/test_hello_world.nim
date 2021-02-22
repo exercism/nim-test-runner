@@ -1,4 +1,4 @@
-import unittest
+import std/unittest
 import hello_world
 
 # version 1.1.0

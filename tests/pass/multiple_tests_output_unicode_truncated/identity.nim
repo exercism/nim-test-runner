@@ -1,4 +1,4 @@
-import strutils, unicode
+import std/[strutils, unicode]
 
 const
   longString = "_➊➋➌➍➎➏➐➑➒".repeat(50)
