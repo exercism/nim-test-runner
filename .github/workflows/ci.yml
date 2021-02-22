@@ -64,7 +64,7 @@ jobs:
         # Remove the container.
         docker rm ntr
         # Write the expected output (which does not contain a newline).
-        printf '{"status":"pass","tests":[{"name":"say hi!","status":"pass","output":""}]}' \
+        printf '{"version":2,"status":"pass","tests":[{"name":"say hi!","status":"pass","output":""}]}' \
           > expected_results.json
         # Fail if the output JSON is not as expected.
         diff results.json expected_results.json

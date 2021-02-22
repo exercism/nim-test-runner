@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "status": "error",
   "message": "Error: internal error: getTypeDescAux(tyEmpty)\nNo stack traceback available\nTo create a stacktrace, rerun compilation with './koch temp c <file>', see https://nim-lang.github.io/Nim/intern.html#debugging-the-compiler for details\n",
   "tests": []

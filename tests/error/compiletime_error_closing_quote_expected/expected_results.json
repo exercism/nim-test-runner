@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "status": "error",
   "message": "hello_world.nim(2, 3) Error: closing \" expected\n",
   "tests": []
