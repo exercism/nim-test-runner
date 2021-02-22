@@ -56,7 +56,7 @@ jobs:
           "exercism/nim-test-runner:${NIM_VERSION}" hello-world /tmp/ /tmp/out/
         # Copy an exercise solution and test file from the `exercism/nim` repo.
         docker cp nim/exercises/practice/hello-world/test_hello_world.nim ntr:/tmp/
-        docker cp nim/exercises/practice/hello-world/example.nim ntr:/tmp/hello_world.nim
+        docker cp nim/exercises/practice/hello-world/.meta/example.nim ntr:/tmp/hello_world.nim
         # Start the container. The runner runs the `hello-world` test.
         docker start -a ntr
         # Copy the runner's JSON output from the container to the host.
