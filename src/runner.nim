@@ -100,10 +100,22 @@ proc getPaths*(conf: Conf): Paths =
     outResults: conf.outputDir / "results.json",
   )
 
+func simplifyPaths(s: var string) =
+  ## Removes path information from `s` that is not meaningful to the student,
+  ## removing all but the filename from each path to an exercise file.
+  ##
+  ## For example, we strip in:
+  ##   `/tmp/nim_test_runner/bob.nim(8, 18)`
+  ## But we don't strip in:
+  ##   `/nim/lib/pure/unittest.nim(647, 43)`
+  s = s.replace("/tmp/nim_test_runner/", "")
+
 proc writeTopLevelErrorJson(path: string, message: string) =
   ## Writes to `path` a JSON file that has a top-level error status, and a
   ## top-level message of `message`.
-  let contents = """{"status": "error", "message": """ & message.escapeJson() &
+  var message = escapeJson(message)
+  simplifyPaths message
+  let contents = """{"status": "error", "message": """ & message &
                  """, "tests": []}"""
   writeFile(path, contents)
 
@@ -166,6 +178,12 @@ proc extractSubmissionOutput(runtimeOutput: string): SubmissionOutput =
                         .mapIt(it.extractTestOutput)
   )
 
+proc simplifyPathsInMessageValues(j: var JsonNode) =
+  ## Removes some path information from the value of each `message` key in `j`.
+  for test in j["tests"]:
+    if test.contains "message":
+      simplifyPaths test["message"].str
+
 proc writeOutput*(resultsFileName, runtimeOutput: string) =
   var testResults = parseFile resultsFileName
   let submissionOutput = runtimeOutput.extractSubmissionOutput
@@ -173,6 +191,7 @@ proc writeOutput*(resultsFileName, runtimeOutput: string) =
   for index, test in submissionOutput.tests:
     testResults["tests"][index]["output"] = test.output.newJString()
 
+  simplifyPathsInMessageValues testResults
   resultsFileName.writeFile $testResults
 
 proc run*(paths: Paths): tuple[output: string, exitCode: int] =

@@ -1,5 +1,5 @@
 {
   "status": "error",
-  "message": "stack trace: (most recent call last)\n/tmp/nim_test_runner/identity.nim(3, 5) identity\n/tmp/nim_test_runner/identity.nim(3, 5) Error: unhandled exception: myValueError [ValueError]\n",
+  "message": "stack trace: (most recent call last)\nidentity.nim(3, 5) identity\nidentity.nim(3, 5) Error: unhandled exception: myValueError [ValueError]\n",
   "tests": []
 }
