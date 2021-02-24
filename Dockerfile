@@ -1,4 +1,4 @@
-ARG NIM_IMAGE=nimlang/nim:1.4.2-alpine-slim@sha256:45cb86ad7b494e381358ae378a04f072f096e11c4e54ed06abdba043fb2667c3
+ARG NIM_IMAGE=nimlang/nim:1.4.4-alpine-slim@sha256:5c82efe7f3afffe4781f3f127d28c21ecb705dc964cc5434fee98feafd63d2d7
 FROM ${NIM_IMAGE} AS builder
 COPY src/runner.nim /build/
 COPY src/unittest_json.nim /build/
