@@ -115,7 +115,7 @@ proc writeTopLevelErrorJson(path: string, message: string) =
   ## top-level message of `message`.
   var message = escapeJson(message)
   simplifyPaths message
-  let contents = """{"status": "error", "message": """ & message &
+  let contents = """{"version": 2, "status": "error", "message": """ & message &
                  """, "tests": []}"""
   writeFile(path, contents)
 

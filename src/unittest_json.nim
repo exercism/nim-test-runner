@@ -18,6 +18,7 @@ type
     output: string
 
   ResultJson = ref object
+    version: int
     case status: JsonTestStatus
     of ERROR:
       message: string
@@ -31,6 +32,9 @@ type
     testStackTrace: string
     result: ResultJson
 
+const
+  specVersion = 2
+
 proc newJsonOutputFormatter*(stream: Stream): <//>JsonOutputFormatter =
   ## Creates a formatter that writes report to the specified stream in
   ## JSON format.
@@ -41,7 +45,7 @@ proc newJsonOutputFormatter*(stream: Stream): <//>JsonOutputFormatter =
     stream: stream,
     testErrors: @[],
     testStackTrace: "",
-    result: ResultJson(tests: @[], status: PASS)
+    result: ResultJson(version: specVersion, status: PASS, tests: @[])
   )
 
 proc close*(formatter: JsonOutputFormatter) =
@@ -110,7 +114,9 @@ method testEnded(formatter: JsonOutputFormatter, testResult: TestResult) =
         status: FAIL,
         message: fmt"{failureMsg}\n{errs}"
       )
-    formatter.result = ResultJson(status: FAIL, tests: formatter.result.tests)
+    formatter.result = ResultJson(version: specVersion,
+                                  status: FAIL,
+                                  tests: formatter.result.tests)
 
   formatter.result.tests.add(jsonTestResult)
 
