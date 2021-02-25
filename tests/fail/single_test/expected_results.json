@@ -5,7 +5,7 @@
     {
       "name": "identity function of 1",
       "status": "fail",
-      "message": "test_identity.nim(11, 22): Check failed: identity(1) == 1000\\nidentity(1) was 1",
+      "message": "test_identity.nim(12, 22): Check failed: identity(1) == 1000\\nidentity(1) was 1",
       "output": ""
     }
   ]

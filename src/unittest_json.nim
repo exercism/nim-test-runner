@@ -1,6 +1,6 @@
 ## An extension of the ``unittest.nim`` library to output json for Exercism v3
 
-import json, streams, strformat, unittest
+import std/[json, streams, strformat, unittest]
 
 type
   JsonTestStatus = enum

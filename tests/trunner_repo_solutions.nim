@@ -1,4 +1,4 @@
-import critbits, json, os, osproc, strutils, unittest
+import std/[critbits, json, os, osproc, strutils, unittest]
 import runner
 
 proc repoSolutions* =

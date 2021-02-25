@@ -1,6 +1,6 @@
 {
   "version": 2,
   "status": "error",
-  "message": "test_identity.nim(9, 7) template/generic instantiation of `suite` from here\ntest_identity.nim(10, 8) template/generic instantiation of `test` from here\ntest_identity.nim(11, 11) Error: undeclared identifier: 'identity'\n",
+  "message": "test_identity.nim(10, 7) template/generic instantiation of `suite` from here\ntest_identity.nim(11, 8) template/generic instantiation of `test` from here\ntest_identity.nim(12, 11) Error: undeclared identifier: 'identity'\n",
   "tests": []
 }

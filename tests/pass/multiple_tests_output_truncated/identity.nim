@@ -1,4 +1,4 @@
-import strutils
+import std/strutils
 
 const longString = "_123456789".repeat(50)
 doAssert longString.len == 500

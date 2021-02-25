@@ -1,4 +1,5 @@
-import json, os, osproc, parseopt, parseutils, sequtils, strutils, terminal, unicode
+import std/[json, os, osproc, parseopt, parseutils, sequtils, strutils,
+            terminal, unicode]
 
 proc writeHelp =
   echo """Usage:
@@ -131,7 +132,7 @@ addOutputFormatter(formatter)
   const afterTests = "\nclose(formatter)\n"
 
   var isBeforeFirstSuite = true
-  var editedTestContents = "import streams, unittest_json\n"
+  var editedTestContents = "import std/streams\nimport unittest_json\n"
 
   for line in lines(paths.inputTest):
     if isBeforeFirstSuite and line.startsWith("suite"):

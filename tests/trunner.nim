@@ -1,4 +1,4 @@
-import json, os, strutils, unittest
+import std/[json, os, strutils, unittest]
 import runner
 
 let tmpBase = getTempDir()
