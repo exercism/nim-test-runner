@@ -5,7 +5,7 @@ proc writeHelp =
   echo """Usage:
   runner [slug] [inputDir] [outputDir]
 
-Run the tests for the `slug` exercise in `inputDir` and write `result.json` to
+Run the tests for the `slug` exercise in `inputDir` and write `results.json` to
 `outputDir`.
 
 Options:
