@@ -1,0 +1,15 @@
+name: Lint Dockerfile
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  hadolint:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
+
+      - name: Run hadolint
+        uses: brpaz/hadolint-action@1623ba61710b974b55ba455930e6f2c8ef919778 # 1.3.1
+        with:
+          dockerfile: Dockerfile
