@@ -1,8 +1,10 @@
 import std/[json, os, osproc, parseopt, parseutils, sequtils, strutils,
             terminal, unicode]
 
-proc writeHelp =
-  echo """Usage:
+proc writeHelp(exitCode: range[0..1]) =
+  ## Writes the help message and quits with the given `exitCode`.
+  const help = """
+Usage:
   runner [slug] [inputDir] [outputDir]
 
 Run the tests for the `slug` exercise in `inputDir` and write `result.json` to
@@ -10,12 +12,17 @@ Run the tests for the `slug` exercise in `inputDir` and write `result.json` to
 
 Options:
   -h, --help      Print this help message"""
-  quit(0)
+
+  let f = if exitCode == 0: stdout else: stderr
+  f.writeLine help
+  if f == stdout:
+    f.flushFile()
+  quit(exitCode)
 
 proc writeErrorMsg(s: string) =
-  stdout.styledWrite(fgRed, "Error: ")
-  stdout.write(s & "\n\n")
-  writeHelp()
+  stderr.styledWrite(fgRed, "Error: ")
+  stderr.write(s & "\n\n")
+  writeHelp(exitCode = 1)
 
 type
   Conf* = object
@@ -41,7 +48,7 @@ proc parseCmdLine: Conf =
       let k = key.toLowerAscii()
       case k
       of "h", "help":
-        writeHelp()
+        writeHelp(exitCode = 0)
       else:
         let prefix = if len(k) == 1: "-" else: "--"
         writeErrorMsg("invalid command line option: '" & prefix & key & "'")
@@ -59,7 +66,7 @@ proc parseCmdLine: Conf =
     of cmdEnd: assert(false) # Cannot happen.
 
   if i == 0:
-    writeHelp()
+    writeHelp(exitCode = 0)
   if result.slug.len == 0 or result.inputDir.len == 0 or result.outputDir.len == 0:
     writeErrorMsg("not enough arguments")
   if result.inputDir[^1] != '/':
