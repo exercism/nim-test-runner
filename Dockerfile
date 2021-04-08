@@ -14,5 +14,4 @@ WORKDIR /opt/test-runner/
 COPY --from=builder /build/runner bin/
 COPY bin/run.sh bin/
 COPY src/unittest_json.nim src/
-ENTRYPOINT ["nim", "c", "-r", "--styleCheck:error", "--hint[Processing]:off", \
-            "--hint[CC]:off", "-d:repoSolutions", "tests/trunner.nim"]
+ENTRYPOINT ["/opt/test-runner/bin/run.sh"]
