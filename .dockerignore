@@ -1,4 +1,5 @@
 *
+!bin/install_nim.sh
 !bin/run.sh
 !src/runner.nim
 !src/unittest_json.nim
