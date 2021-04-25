@@ -15,24 +15,24 @@ RUN apk add --no-cache --virtual=.build-deps \
     && apk del .build-deps
 
 FROM ${REPO}:${IMAGE} AS builder2
-# hadolint ignore=DL3018
-RUN apk add --no-cache \
-      gcc \
-      musl-dev
 COPY --from=builder /nim/ /nim/
-RUN ln -s /nim/bin/nim /bin/nim
 COPY src/runner.nim /build/
 COPY src/unittest_json.nim /build/
-RUN nim c -d:release -d:lto -d:strip /build/runner.nim
+# hadolint ignore=DL3018
+RUN apk add --no-cache --virtual=.build-deps \
+      gcc \
+      musl-dev \
+    && /nim/bin/nim c -d:release -d:lto -d:strip /build/runner.nim \
+    && apk del .build-deps
 
 FROM ${REPO}:${IMAGE}
+COPY --from=builder /nim/ /nim/
 # hadolint ignore=DL3018
 RUN apk add --no-cache \
       gcc \
       musl-dev \
-      pcre
-COPY --from=builder /nim/ /nim/
-RUN ln -s /nim/bin/nim /bin/nim
+      pcre \
+    && ln -s /nim/bin/nim /usr/local/bin/nim
 WORKDIR /opt/test-runner/
 COPY --from=builder2 /build/runner bin/
 COPY bin/run.sh bin/
