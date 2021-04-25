@@ -24,12 +24,19 @@ COPY src/runner.nim /build/
 COPY src/unittest_json.nim /build/
 RUN /nim/bin/nim c -d:release -d:lto -d:strip /build/runner.nim
 
-FROM base
+FROM ${REPO}:${IMAGE}
 COPY --from=nim_builder /nim/ /nim/
 # hadolint ignore=DL3018
 RUN apk add --no-cache \
+      gcc \
+      musl-dev \
       pcre \
-    && ln -s /nim/bin/nim /usr/local/bin/nim
+    && ln -s /nim/bin/nim /usr/local/bin/nim \
+    && printf '\nRemoving some unneeded large files:\n' \
+    && rm -v /usr/bin/lto-dump \
+    && rm -v /usr/lib/libgphobos.so.1.0.0 \
+    && rm -v /usr/libexec/gcc/x86_64-alpine-linux-musl/10.2.1/lto-wrapper \
+    && rm -v /usr/libexec/gcc/x86_64-alpine-linux-musl/10.2.1/lto1
 WORKDIR /opt/test-runner/
 COPY --from=runner_builder /build/runner bin/
 COPY bin/run.sh bin/
