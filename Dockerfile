@@ -34,9 +34,8 @@ RUN apk add --no-cache \
     && ln -s /nim/bin/nim /usr/local/bin/nim \
     && printf '\nRemoving some unneeded large files:\n' \
     && rm -v /usr/bin/lto-dump \
-    && rm -v /usr/lib/libgphobos.so.1.0.0 \
-    && rm -v /usr/libexec/gcc/x86_64-alpine-linux-musl/10.2.1/lto-wrapper \
-    && rm -v /usr/libexec/gcc/x86_64-alpine-linux-musl/10.2.1/lto1
+    && find / -path '/usr/libexec/gcc/x86_64-alpine-linux-musl/*/lto*' -exec rm -v {} + \
+    && find / -path '/usr/lib/libgphobos.so*' -exec rm -v {} +
 WORKDIR /opt/test-runner/
 COPY --from=runner_builder /build/runner bin/
 COPY bin/run.sh bin/
