@@ -3,7 +3,7 @@
 set -ex
 
 readonly ARCHIVE_FILENAME='nim.tar.xz'
-readonly NIM_VERSION='1.4.6'
+readonly NIM_VERSION='1.4.4'
 readonly BUILD_DIR='/build/nim'
 readonly INSTALL_DIR='/nim/'
 mkdir -p "${BUILD_DIR}"
