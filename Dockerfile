@@ -1,6 +1,4 @@
-ARG REPO=alpine
-ARG IMAGE=3.14.0@sha256:1775bebec23e1f3ce486989bfc9ff3c4e951690df84aa9f926497d82f2ffca9d
-FROM ${REPO}:${IMAGE} AS base
+FROM alpine:3.14.0@sha256:1775bebec23e1f3ce486989bfc9ff3c4e951690df84aa9f926497d82f2ffca9d AS base
 # We can't reliably pin the package versions on Alpine, so we ignore the linter warning.
 # See https://gitlab.alpinelinux.org/alpine/abuild/-/issues/9996
 # hadolint ignore=DL3018
@@ -24,7 +22,7 @@ COPY src/runner.nim /build/
 COPY src/unittest_json.nim /build/
 RUN /nim/bin/nim c -d:release -d:lto -d:strip /build/runner.nim
 
-FROM ${REPO}:${IMAGE}
+FROM base
 COPY --from=nim_builder /nim/ /nim/
 # hadolint ignore=DL3018
 RUN apk add --no-cache \
