@@ -35,7 +35,7 @@ type
 const
   specVersion = 2
 
-proc newJsonOutputFormatter*(stream: Stream): <//>JsonOutputFormatter =
+proc newJsonOutputFormatter*(stream: Stream): JsonOutputFormatter =
   ## Creates a formatter that writes report to the specified stream in
   ## JSON format.
   ## The ``stream`` is NOT closed automatically when the test are finished,
