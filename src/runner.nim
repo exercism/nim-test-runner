@@ -193,14 +193,21 @@ proc simplifyPathsInMessageValues(j: var JsonNode) =
       simplifyPaths test["message"].str
 
 proc writeOutput*(resultsFileName, runtimeOutput: string) =
-  var testResults = parseFile resultsFileName
-  let submissionOutput = runtimeOutput.extractSubmissionOutput
+  let resultsContents = readFile resultsFileName
+  if resultsContents.len > 0:
+    try:
+      var testResults = parseJson resultsContents
+      let submissionOutput = runtimeOutput.extractSubmissionOutput
 
-  for index, test in submissionOutput.tests:
-    testResults["tests"][index]["output"] = test.output.newJString()
+      for index, test in submissionOutput.tests:
+        testResults["tests"][index]["output"] = test.output.newJString()
 
-  simplifyPathsInMessageValues testResults
-  resultsFileName.writeFile $testResults
+      simplifyPathsInMessageValues testResults
+      resultsFileName.writeFile $testResults
+    except JsonParsingError:
+      writeTopLevelErrorJson(resultsFileName, runtimeOutput)
+  else:
+    writeTopLevelErrorJson(resultsFileName, runtimeOutput)
 
 proc run*(paths: Paths): tuple[output: string, exitCode: int] =
   ## Compiles and runs the file in `paths.tmpTest`. Returns its exit code and
