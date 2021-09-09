@@ -16,6 +16,7 @@ type
     of PASS:
       discard
     output: string
+    testCode: string
 
   ResultJson = ref object
     version: int
@@ -28,6 +29,7 @@ type
 
   JsonOutputFormatter = ref object of OutputFormatter
     stream: Stream
+    testCode: string
     testErrors: seq[string]
     testStackTrace: string
     result: ResultJson
@@ -50,7 +52,11 @@ proc newJsonOutputFormatter*(stream: Stream): JsonOutputFormatter =
 
 proc close*(formatter: JsonOutputFormatter) =
   ## Completes the report and closes the underlying stream.
-  formatter.stream.write($(%formatter.result))
+  let json = %formatter.result
+  for test in json["tests"]:
+    test["test_code"] = test["testCode"]
+    test.delete "testCode"
+  formatter.stream.write($json)
   formatter.stream.close()
 
 method suiteStarted(formatter: JsonOutputFormatter, suiteName: string) =
@@ -117,7 +123,7 @@ method testEnded(formatter: JsonOutputFormatter, testResult: TestResult) =
     formatter.result = ResultJson(version: specVersion,
                                   status: FAIL,
                                   tests: formatter.result.tests)
-
+  jsonTestResult.testCode = formatter.testCode
   formatter.result.tests.add(jsonTestResult)
 
 method suiteEnded(formatter: JsonOutputFormatter) =
