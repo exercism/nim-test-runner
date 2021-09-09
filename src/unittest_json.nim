@@ -1,6 +1,6 @@
 ## An extension of the ``unittest.nim`` library to output json for Exercism v3
 
-import std/[json, streams, strformat, unittest]
+import std/[json, macros, streams, strformat, strutils, unittest]
 
 type
   JsonTestStatus = enum
@@ -36,6 +36,16 @@ type
 
 const
   specVersion = 2
+
+macro testWrapper*(name, body: untyped) =
+  ## This is a wrapper of ``unittest.test`` to allow for the test code to be
+  ## injected in the resulting json file
+  let testCode = body.repr.strip
+  result = quote do:
+    when declared(formatter) and compiles(formatter.testCode):
+      formatter.testCode = `testCode`
+    unittest.test `name`:
+      `body`
 
 proc newJsonOutputFormatter*(stream: Stream): JsonOutputFormatter =
   ## Creates a formatter that writes report to the specified stream in
