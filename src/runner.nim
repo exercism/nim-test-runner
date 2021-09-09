@@ -135,6 +135,10 @@ proc copyEditedTest(paths: Paths) =
 let formatter = newJsonOutputFormatter(strm)
 addOutputFormatter(formatter)
 
+template test(name, body: untyped) {.dirty.} =
+  testWrapper name:
+    body
+
 """
   const afterTests = "\nclose(formatter)\n"
 
