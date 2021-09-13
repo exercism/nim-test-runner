@@ -5,17 +5,20 @@
     {
       "name": "identity function of 1",
       "status": "pass",
-      "output": "stdout here: my input is: 1\nstderr here: my input is: 1\n"
+      "output": "stdout here: my input is: 1\nstderr here: my input is: 1\n",
+      "test_code": "check identity(1) == 1"
     },
     {
       "name": "identity function of 2",
       "status": "pass",
-      "output": "stdout here: my input is: 2\nstderr here: my input is: 2\n"
+      "output": "stdout here: my input is: 2\nstderr here: my input is: 2\n",
+      "test_code": "check identity(2) == 2"
     },
     {
       "name": "identity function of 3",
       "status": "pass",
-      "output": "stdout here: my input is: 3\nstderr here: my input is: 3\n"
+      "output": "stdout here: my input is: 3\nstderr here: my input is: 3\n",
+      "test_code": "check identity(3) == 3"
     }
   ]
 }

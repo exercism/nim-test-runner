@@ -5,7 +5,8 @@
     {
       "name": "say hi!",
       "status": "pass",
-      "output": ""
+      "output": "",
+      "test_code": "check hello() == \"Hello, World!\""
     }
   ]
 }

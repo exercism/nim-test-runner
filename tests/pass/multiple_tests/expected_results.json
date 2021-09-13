@@ -5,17 +5,20 @@
     {
       "name": "identity function of 1",
       "status": "pass",
-      "output": ""
+      "output": "",
+      "test_code": "check identity(1) == 1"
     },
     {
       "name": "identity function of 2",
       "status": "pass",
-      "output": ""
+      "output": "",
+      "test_code": "check identity(2) == 2"
     },
     {
       "name": "identity function of 3",
       "status": "pass",
-      "output": ""
+      "output": "",
+      "test_code": "check identity(3) == 3"
     }
   ]
 }

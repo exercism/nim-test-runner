@@ -5,7 +5,8 @@
     {
       "name": "identity function of 1",
       "status": "pass",
-      "output": "🅣🅗🅔 🅘🅝🅟🅤🅣 🅘🅢 1\n"
+      "output": "🅣🅗🅔 🅘🅝🅟🅤🅣 🅘🅢 1\n",
+      "test_code": "check identity(1) == 1"
     }
   ]
 }

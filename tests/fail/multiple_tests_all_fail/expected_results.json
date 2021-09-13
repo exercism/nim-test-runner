@@ -5,20 +5,23 @@
     {
       "name": "identity function of 1",
       "status": "fail",
-      "message": "test_identity.nim(12, 22): Check failed: identity(1) == 1000\\nidentity(1) was 1",
-      "output": ""
+      "message": "test_identity.nim(16, 22): Check failed: identity(1) == 1000\\nidentity(1) was 1",
+      "output": "",
+      "test_code": "check identity(1) == 1000"
     },
     {
       "name": "identity function of 2",
       "status": "fail",
-      "message": "test_identity.nim(15, 22): Check failed: identity(2) == 2000\\nidentity(2) was 2",
-      "output": ""
+      "message": "test_identity.nim(19, 22): Check failed: identity(2) == 2000\\nidentity(2) was 2",
+      "output": "",
+      "test_code": "check identity(2) == 2000"
     },
     {
       "name": "identity function of 3",
       "status": "fail",
-      "message": "test_identity.nim(18, 22): Check failed: identity(3) == 3000\\nidentity(3) was 3",
-      "output": ""
+      "message": "test_identity.nim(22, 22): Check failed: identity(3) == 3000\\nidentity(3) was 3",
+      "output": "",
+      "test_code": "check identity(3) == 3000"
     }
   ]
 }
