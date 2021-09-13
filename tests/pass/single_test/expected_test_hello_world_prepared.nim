@@ -9,6 +9,10 @@ var strm = newFileStream("trunner_replaces_this_with_path_to_results_json", fmWr
 let formatter = newJsonOutputFormatter(strm)
 addOutputFormatter(formatter)
 
+template test(name, body: untyped) {.dirty.} =
+  testWrapper name:
+    body
+
 suite "Hello World":
   test "say hi!":
     check hello() == "Hello, World!"

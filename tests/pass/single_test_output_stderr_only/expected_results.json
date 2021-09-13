@@ -5,7 +5,8 @@
     {
       "name": "identity function of 1",
       "status": "pass",
-      "output": "stderr here: my input is: 1\n"
+      "output": "stderr here: my input is: 1\n",
+      "test_code": "check identity(1) == 1"
     }
   ]
 }

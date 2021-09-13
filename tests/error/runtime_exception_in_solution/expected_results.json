@@ -6,7 +6,8 @@
       "name": "identity function of 1",
       "status": "error",
       "message": "Unhandled exception: myValueError [ValueError]\\n/nim/lib/pure/unittest.nim(654) test_identity\nidentity.nim(2) identity\n",
-      "output": ""
+      "output": "",
+      "test_code": "check identity(1) == 1"
     }
   ]
 }

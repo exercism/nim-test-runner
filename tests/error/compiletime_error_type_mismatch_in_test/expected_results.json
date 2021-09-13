@@ -1,6 +1,6 @@
 {
   "version": 2,
   "status": "error",
-  "message": "test_identity.nim(10, 7) template/generic instantiation of `suite` from here\ntest_identity.nim(11, 8) template/generic instantiation of `test` from here\ntest_identity.nim(12, 11) template/generic instantiation of `check` from here\n/nim/lib/pure/unittest.nim(654, 43) Error: type mismatch: got <int literal(1)>\nbut expected one of: \nfunc identity(s: string): string\n  first type mismatch at position: 1\n  required type for s: string\n  but expression '1' is of type: int literal(1)\n\nexpression: identity(1)\n",
+  "message": "test_identity.nim(14, 7) template/generic instantiation of `suite` from here\ntest_identity.nim(15, 8) template/generic instantiation of `test` from here\nunittest_json.nim(44, 12) template/generic instantiation of `test` from here\ntest_identity.nim(16, 11) template/generic instantiation of `check` from here\n/nim/lib/pure/unittest.nim(654, 43) Error: type mismatch: got <int literal(1)>\nbut expected one of: \nfunc identity(s: string): string\n  first type mismatch at position: 1\n  required type for s: string\n  but expression '1' is of type: int literal(1)\n\nexpression: identity(1)\n",
   "tests": []
 }
