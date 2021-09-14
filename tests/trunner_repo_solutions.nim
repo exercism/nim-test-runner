@@ -44,7 +44,8 @@ proc repoSolutions* =
             test["name"].getStr().len > 0
             test["output"].getStr().len == 0
             test["status"].getStr() == "pass"
-            test.len == 3
+            test["test_code"].getStr().len > 0
+            test.len == 4
         check:
           j["status"].getStr() == "pass"
         moveFile(paths.outResults, conf.outputDir / slugUnder & ".json")
