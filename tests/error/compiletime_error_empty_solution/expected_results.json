@@ -1,6 +1,6 @@
 {
   "version": 2,
   "status": "error",
-  "message": "test_identity.nim(14, 7) template/generic instantiation of `suite` from here\ntest_identity.nim(15, 8) template/generic instantiation of `test` from here\nunittest_json.nim(44, 12) template/generic instantiation of `test` from here\ntest_identity.nim(16, 11) Error: undeclared identifier: 'identity'\n",
+  "message": "\u001B[1mtest_identity.nim(14, 7) \u001B[0mtemplate/generic instantiation of `suite` from here\u001B[0m\n\u001B[1mtest_identity.nim(15, 8) \u001B[0mtemplate/generic instantiation of `test` from here\u001B[0m\n\u001B[1munittest_json.nim(44, 12) \u001B[0mtemplate/generic instantiation of `test` from here\u001B[0m\n\u001B[1mtest_identity.nim(16, 11) \u001B[0m\u001B[31mError: \u001B[0mundeclared identifier: 'identity'\u001B[36m\u001B[0m\n",
   "tests": []
 }
