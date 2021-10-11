@@ -211,7 +211,7 @@ proc run*(paths: Paths): tuple[output: string, exitCode: int] =
   ## the run-time output (which is empty if compilation fails).
   let (compMsgs, exitCode1) = execCmdEx("nim c --cc:tcc --styleCheck:hint " &
                                         "--skipUserCfg:on --verbosity:0 " &
-                                        "--hint[Processing]:off " &
+                                        "--hint[Processing]:off --colors: on " &
                                         paths.tmpTest)
 
   if exitCode1 != 0:
