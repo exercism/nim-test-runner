@@ -1,6 +1,6 @@
 {
   "version": 2,
   "status": "error",
-  "message": "stack trace: (most recent call last)\nidentity.nim(3, 5) identity\nidentity.nim(3, 5) Error: unhandled exception: myValueError [ValueError]\n",
+  "message": "stack trace: (most recent call last)\nidentity.nim(3, 5) identity\n\u001B[1midentity.nim(3, 5) \u001B[0m\u001B[31mError: \u001B[0munhandled exception: myValueError [ValueError]\u001B[36m\u001B[0m\n",
   "tests": []
 }
