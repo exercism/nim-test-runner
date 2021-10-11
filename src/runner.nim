@@ -116,7 +116,8 @@ func simplifyPaths(s: var string) =
   ##   `/tmp/nim_test_runner/bob.nim(8, 18)`
   ## But we don't strip in:
   ##   `/nim/lib/pure/unittest.nim(647, 43)`
-  s = s.replace("/tmp/nim_test_runner/", "")
+  # s = s.replace("/tmp/nim_test_runner/", "")
+  discard
 
 proc writeTopLevelErrorJson(path: string, message: string) =
   ## Writes to `path` a JSON file that has a top-level error status, and a
@@ -209,7 +210,7 @@ proc writeOutput*(resultsFileName, runtimeOutput: string) =
 proc run*(paths: Paths): tuple[output: string, exitCode: int] =
   ## Compiles and runs the file in `paths.tmpTest`. Returns its exit code and
   ## the run-time output (which is empty if compilation fails).
-  let (compMsgs, exitCode1) = execCmdEx("nim c --cc:tcc --styleCheck:hint " &
+  let (compMsgs, exitCode1) = execCmdEx("nim c --cc:tcc --listFullPaths:off --excessiveStackTrace:off --styleCheck:hint " &
                                         "--skipUserCfg:on --verbosity:0 " &
                                         "--hint[Processing]:off " &
                                         paths.tmpTest)
