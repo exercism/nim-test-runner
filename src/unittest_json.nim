@@ -1,6 +1,6 @@
 ## An extension of the ``unittest.nim`` library to output json for Exercism v3
 
-import std/[json, macros, streams, strformat, strutils, unittest]
+import std/[json, macros, streams, strutils, unittest]
 
 type
   JsonTestStatus = enum
@@ -120,7 +120,7 @@ method testEnded(formatter: JsonOutputFormatter, testResult: TestResult) =
       jsonTestResult = JsonTestResult(
         name: testResult.testName,
         status: ERROR,
-        message: fmt"{failureMsg}\n{formatter.testStackTrace}"
+        message: failureMsg & '\n' & formatter.testStackTrace
       )
       if errs.len > 0:
         jsonTestResult.message.insert(errs & "\n")
@@ -128,7 +128,7 @@ method testEnded(formatter: JsonOutputFormatter, testResult: TestResult) =
       jsonTestResult = JsonTestResult(
         name: testResult.testName,
         status: FAIL,
-        message: fmt"{failureMsg}\n{errs}"
+        message: failureMsg & '\n' & errs
       )
     formatter.result = ResultJson(version: specVersion,
                                   status: FAIL,
