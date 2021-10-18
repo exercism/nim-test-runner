@@ -7,7 +7,7 @@ on:
     paths-ignore:
       - '**.md'
 env:
-  NIM_VERSION: 1.4.6
+  NIM_VERSION: 1.6.0
 
 jobs:
   job1:
