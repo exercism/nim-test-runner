@@ -1,6 +1,6 @@
 {
   "version": 2,
   "status": "error",
-  "message": "\u001B[1midentity.nim(2, 3) \u001B[0m\u001B[31mError: \u001B[0mundeclared identifier: 'myUndeclaredVariable'\u001B[36m\u001B[0m\n",
+  "message": "\u001B[1midentity.nim(2, 3) \u001B[0m\u001B[31mError: \u001B[0mundeclared identifier: 'myUndeclaredVariable'\ncandidates (edit distance, scope distance); see '--spellSuggest': \n (11, 4): 'declaredInScope' [proc declared in /nim/lib/system.nim(187, 8)]\u001B[36m\u001B[0m\u001B[0m\n",
   "tests": []
 }
