@@ -1,6 +1,6 @@
 {
   "version": 2,
   "status": "error",
-  "message": "\u001B[1m\u001B[0m\u001B[31mError: \u001B[0minternal error: getTypeDescAux(tyEmpty)\u001B[36m\u001B[0m\n\u001B[31mNo stack traceback available\nTo create a stacktrace, rerun compilation with './koch temp c <file>', see https://nim-lang.github.io/Nim/intern.html#debugging-the-compiler for details\u001B[0m\n",
+  "message": "\u001B[1m\u001B[0m\u001B[31mError: \u001B[0minternal error: getTypeDescAux(tyEmpty)\u001B[36m\u001B[0m\u001B[0m\n\u001B[31mNo stack traceback available\nTo create a stacktrace, rerun compilation with './koch temp c <file>', see https://nim-lang.github.io/Nim/intern.html#debugging-the-compiler for details\u001B[0m\n",
   "tests": []
 }
