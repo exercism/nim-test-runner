@@ -5,3 +5,4 @@
 !src/unittest_json.nim
 !tests/
 .appends
+.git
