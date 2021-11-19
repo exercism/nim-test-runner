@@ -4,3 +4,4 @@
 !src/runner.nim
 !src/unittest_json.nim
 !tests/
+.appends
