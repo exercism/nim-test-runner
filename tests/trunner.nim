@@ -1,4 +1,5 @@
-import std/[json, os, strutils, unittest]
+import std/[json, os, strutils, terminal, unittest]
+import diff
 import runner
 
 let tmpBase = getTempDir()
@@ -47,10 +48,23 @@ for status in ["pass", "fail", "error"]:
             if fileExists(pathExpectedResultsJson):
               let expectedResultsJson = parseFile(pathExpectedResultsJson)
               if resultsJson != expectedResultsJson:
-                echo "\nresults.json:"
-                echo resultsJson.pretty()
-                echo "\nexpected_results.json:"
-                echo expectedResultsJson.pretty()
+                echo "diff of expectedJson -> results.json"
+                for span in spanSlices(expectedResultsJson.pretty.splitLines, resultsJson.pretty.splitLines):
+                  case span.tag:
+                    of tagReplace:
+                      for text in span.a:
+                        styledEcho fgRed, "- ", text
+                      for text in span.b:
+                        styledEcho fgGreen, "+ ", text
+                    of tagDelete:
+                      for text in span.a:
+                        styledEcho fgRed, "- ", text
+                    of tagInsert:
+                      for text in span.b:
+                        styledEcho fgGreen, "+ ", text
+                    of tagEqual:
+                      for text in span.a:
+                        styledEcho "  ", text
                 fail()
             else:
               when defined(writeJson):
