@@ -35,6 +35,9 @@ jobs:
         sudo apt-get update -y
         sudo apt-get install -y tcc
 
+    - name: Install ynfle's fork of the `diff` package pinned to desired the commit
+      run: "nimble install https://github.com/ynfle/diff@#ae470e7702fd07a6ea850b2a6f2de701130fa048 -y"
+
     - name: Compile and run `tests/trunner.nim`
       run: "nim c -r --styleCheck:error --hint[Processing]:off tests/trunner.nim"
 
@@ -72,6 +75,12 @@ jobs:
         # Fail if the output JSON is not as expected.
         diff results.json expected_results.json
 
+    - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # 2.4.0
+      with:
+        repository: 'ynfle/diff'
+        ref: 'ae470e7702fd07a6ea850b2a6f2de701130fa048'
+        path: 'diff'
+
     - name: Run tests inside container (including for exercises from `exercism/nim`)
       run: |
         # Create a container from the image we built, overriding the `ENTRYPOINT`
@@ -80,5 +89,6 @@ jobs:
         # Copy the required files and run the tests.
         docker cp src/runner.nim ntr:/opt/test-runner/src/
         docker cp tests/ ntr:/opt/test-runner/tests/
+        docker cp diff/src/diff.nim ntr:/opt/test-runner/tests/diff.nim
         docker cp nim/ ntr:/tmp/exercism-nim/
         docker start -a ntr
