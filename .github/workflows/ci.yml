@@ -10,6 +10,15 @@ env:
   NIM_VERSION: 1.6.0
 
 jobs:
+  test:
+    runs-on: ubuntu-20.04
+    container: nimlang/nim:latest-alpine
+    steps:
+      - name: check location of nim installation
+        run: |
+          ls /nim/lib/*
+          find . -name 'tables.nim'
+
   job1:
     name: trunner.nim
     runs-on: ubuntu-20.04
