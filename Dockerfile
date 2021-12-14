@@ -1,5 +1,7 @@
 ARG REPO=alpine
 ARG IMAGE=3.14.2@sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a
+ARG NIM_REPO=exercism/nim-docker-base
+ARG NIM_IMAGE=18a2d8619faf474ee7afc7ae499f111271eb4e12@sha256:f82623160b431a6d4665e7a3213a306f208b1a22a5f1540120484b4eb312937a
 FROM ${REPO}:${IMAGE} AS base
 # We can't reliably pin the package versions on Alpine, so we ignore the linter warning.
 # See https://gitlab.alpinelinux.org/alpine/abuild/-/issues/9996
@@ -8,15 +10,7 @@ RUN apk add --no-cache \
       gcc \
       musl-dev
 
-FROM base AS nim_builder
-COPY bin/install_nim.sh /build/
-# hadolint ignore=DL3018
-RUN apk add --no-cache --virtual=.build-deps \
-      curl \
-      tar \
-      xz \
-    && sh /build/install_nim.sh \
-    && apk del .build-deps
+FROM ${NIM_REPO}:${NIM_IMAGE} AS nim_builder
 
 FROM base AS runner_builder
 COPY --from=nim_builder /nim/ /nim/
