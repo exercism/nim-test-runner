@@ -7,9 +7,9 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # 2.4.0
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
       - name: Run hadolint
-        uses: hadolint/hadolint-action@d7b38582334d9ac11c12021c16f21d63015fa250 # 1.6.0
+        uses: hadolint/hadolint-action@d7b38582334d9ac11c12021c16f21d63015fa250
         with:
           dockerfile: Dockerfile
