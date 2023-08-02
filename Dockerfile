@@ -16,7 +16,7 @@ FROM base AS runner_builder
 COPY --from=nim_builder /nim/ /nim/
 COPY src/runner.nim /build/
 COPY src/unittest_json.nim /build/
-RUN /nim/bin/nim c -d:release -d:lto -d:strip /build/runner.nim
+RUN /nim/bin/nim c --threads:off -d:release -d:lto -d:strip /build/runner.nim
 
 FROM ${REPO}:${IMAGE}
 COPY --from=nim_builder /nim/ /nim/

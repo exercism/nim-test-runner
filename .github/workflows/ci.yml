@@ -39,7 +39,7 @@ jobs:
       run: "nimble install https://github.com/ynfle/diff@#ae470e7702fd07a6ea850b2a6f2de701130fa048 -y"
 
     - name: Compile and run `tests/trunner.nim`
-      run: "nim c -r --styleCheck:error --hint[Processing]:off tests/trunner.nim"
+      run: "nim c -r --threads:off --styleCheck:error --hint[Processing]:off tests/trunner.nim"
 
   job2:
     name: Docker - build image and run
@@ -85,7 +85,7 @@ jobs:
       run: |
         # Create a container from the image we built, overriding the `ENTRYPOINT`
         docker create --rm --entrypoint nim --name ntr "exercism/nim-test-runner:${NIM_VERSION}" \
-          c --cc:tcc -r --styleCheck:error --hint[Processing]:off --hint[CC]:off -d:repoSolutions tests/trunner.nim
+          c --cc:tcc --threads:off -r --styleCheck:error --hint[Processing]:off --hint[CC]:off -d:repoSolutions tests/trunner.nim
         # Copy the required files and run the tests.
         docker cp src/runner.nim ntr:/opt/test-runner/src/
         docker cp tests/ ntr:/opt/test-runner/tests/
