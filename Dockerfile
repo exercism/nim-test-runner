@@ -1,7 +1,7 @@
 ARG REPO=alpine
 ARG IMAGE=3.17.0@sha256:c0d488a800e4127c334ad20d61d7bc21b4097540327217dfab52262adc02380c
 ARG NIM_REPO=exercism/nim-docker-base
-ARG NIM_IMAGE=d20bcc5694e0a04ef2db5afe60654e5d323f28da@sha256:b550604c5b3eb1a83250594ab99a1495d3f07820d340f4d17e4c8eb7050b50e5
+ARG NIM_IMAGE=4c2a43210d24c9513348198d0d12d73772a11ab6@sha256:a21e509074bffe364288b2575d0cb07d9627554d981c53ea97b1fb793dfde1bf
 FROM ${REPO}:${IMAGE} AS base
 # We can't reliably pin the package versions on Alpine, so we ignore the linter warning.
 # See https://gitlab.alpinelinux.org/alpine/abuild/-/issues/9996
