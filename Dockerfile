@@ -1,7 +1,7 @@
 ARG REPO=alpine
-ARG IMAGE=3.17.0@sha256:c0d488a800e4127c334ad20d61d7bc21b4097540327217dfab52262adc02380c
+ARG IMAGE=3.18.2@sha256:25fad2a32ad1f6f510e528448ae1ec69a28ef81916a004d3629874104f8a7f70
 ARG NIM_REPO=exercism/nim-docker-base
-ARG NIM_IMAGE=d20bcc5694e0a04ef2db5afe60654e5d323f28da@sha256:b550604c5b3eb1a83250594ab99a1495d3f07820d340f4d17e4c8eb7050b50e5
+ARG NIM_IMAGE=baf2cd14c442dab78890019461463ae5a1c64d6c@sha256:472e0019d6e629afb2e89a498672a07ada416fc9ecc65581924dbe594ed43e3c
 FROM ${REPO}:${IMAGE} AS base
 # We can't reliably pin the package versions on Alpine, so we ignore the linter warning.
 # See https://gitlab.alpinelinux.org/alpine/abuild/-/issues/9996
@@ -16,7 +16,7 @@ FROM base AS runner_builder
 COPY --from=nim_builder /nim/ /nim/
 COPY src/runner.nim /build/
 COPY src/unittest_json.nim /build/
-RUN /nim/bin/nim c -d:release -d:lto -d:strip /build/runner.nim
+RUN /nim/bin/nim c --threads:off -d:release -d:lto -d:strip /build/runner.nim
 
 FROM ${REPO}:${IMAGE}
 COPY --from=nim_builder /nim/ /nim/
