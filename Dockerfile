@@ -28,6 +28,7 @@ RUN apk add --no-cache \
       tcc \
       tcc-dev \
       tcc-libs \
+      tcc-libs-static \
     && ln -s /nim/bin/nim /usr/local/bin/nim
 WORKDIR /opt/test-runner/
 COPY --from=runner_builder /build/runner bin/
