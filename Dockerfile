@@ -27,6 +27,7 @@ RUN apk add --no-cache \
     && apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing \
       tcc \
       tcc-dev \
+      tcc-libs \
     && ln -s /nim/bin/nim /usr/local/bin/nim
 WORKDIR /opt/test-runner/
 COPY --from=runner_builder /build/runner bin/
