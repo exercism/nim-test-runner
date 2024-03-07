@@ -26,7 +26,6 @@ RUN apk add --no-cache \
       pcre \
     && apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing \
       tcc \
-      tcc-dev \
       tcc-libs \
       tcc-libs-static \
     && ln -s /nim/bin/nim /usr/local/bin/nim
