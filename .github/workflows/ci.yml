@@ -1,11 +1,7 @@
 name: CI
 on:
   push:
-    paths-ignore:
-      - '**.md'
   pull_request:
-    paths-ignore:
-      - '**.md'
 env:
   NIM_VERSION: 2.0.0
 
