@@ -18,19 +18,16 @@ for test_dir in tests/*/*; do
     test_dir_name=$(basename "${test_dir}")
     test_dir_path=$(realpath "${test_dir}")
     slug="identity"
-
-    bin/run.sh "${slug}" "${test_dir_path}/" "${test_dir_path}/"
-
     file="results.json"
     expected_file="expected_${file}"
 
-    tmp_results_file=$(mktemp -t results.json)
-    tmp_expected_results_file=$(mktemp -t expected_results.json)
-    jq '.' "${test_dir_path}/${file}" > "${tmp_results_file}"
-    jq '.' "${test_dir_path}/${expected_file}" > "${tmp_expected_results_file}"
+    bin/run.sh "${slug}" "${test_dir_path}/" "${test_dir_path}/"
+
+    # Normalize the generated results.json file to make it easier to diff
+    jq '.' "${test_dir_path}/${file}" > tmp && mv tmp "${test_dir_path}/${file}"
 
     echo "${test_dir_name}: comparing ${file} to ${expected_file}"
-    if ! diff "${tmp_results_file}" "${tmp_expected_results_file}"; then
+    if ! diff "${test_dir_path}/${file}" "${test_dir_path}/${expected_file}"; then
         exit_code=1
     fi
 done
