@@ -1,6 +1,6 @@
 {
   "version": 2,
   "status": "error",
-  "message": "\u001B[1mhello_world.nim(2, 3) \u001B[0m\u001B[31mError: \u001B[0mclosing \" expected\u001B[36m\u001B[0m\u001B[0m\n",
+  "message": "\u001b[1mhello_world.nim(2, 3) \u001b[0m\u001b[31mError: \u001b[0mclosing \" expected\u001b[36m\u001b[0m\u001b[0m\n",
   "tests": []
 }

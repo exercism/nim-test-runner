@@ -1,6 +1,6 @@
 {
   "version": 2,
   "status": "error",
-  "message": "\u001B[1midentity.nim(3, 12) \u001B[0m\u001B[31mError: \u001B[0mcannot infer element type of items([])\u001B[36m\u001B[0m\u001B[0m\n",
+  "message": "\u001b[1midentity.nim(3, 12) \u001b[0m\u001b[31mError: \u001b[0mcannot infer element type of items([])\u001b[36m\u001b[0m\u001b[0m\n",
   "tests": []
 }
