@@ -24,6 +24,7 @@ COPY --from=nim_builder /nim/ /nim/
 RUN apk add --no-cache \
       musl-dev \
       pcre \
+      jq \
     && apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing \
       tcc \
       tcc-libs-static \
