@@ -23,9 +23,14 @@ for test_dir in tests/*/*; do
 
     file="results.json"
     expected_file="expected_${file}"
-    echo "${test_dir_name}: comparing ${file} to ${expected_file}"
 
-    if ! diff <(jq '.' "${test_dir_path}/${file}") <(jq '.' "${test_dir_path}/${expected_file}"); then
+    tmp_results_file=$(mktemp)
+    tmp_expected_results_file=$(mktemp)
+    jq '.' "${test_dir_path}/${file}" > "${tmp_results_file}"
+    jq '.' "${test_dir_path}/${expected_file}" > "${tmp_expected_results_file}"
+
+    echo "${test_dir_name}: comparing ${file} to ${expected_file}"
+    if ! diff "${tmp_results_file}" "${tmp_expected_results_file}"; then
         exit_code=1
     fi
 done
