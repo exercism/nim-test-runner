@@ -24,8 +24,8 @@ for test_dir in tests/*/*; do
     file="results.json"
     expected_file="expected_${file}"
 
-    tmp_results_file=$(mktemp)
-    tmp_expected_results_file=$(mktemp)
+    tmp_results_file=$(mktemp -t results.json)
+    tmp_expected_results_file=$(mktemp -t expected_results.json)
     jq '.' "${test_dir_path}/${file}" > "${tmp_results_file}"
     jq '.' "${test_dir_path}/${expected_file}" > "${tmp_expected_results_file}"
 
