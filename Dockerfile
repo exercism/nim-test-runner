@@ -22,6 +22,7 @@ FROM ${REPO}:${IMAGE}
 COPY --from=nim_builder /nim/ /nim/
 # hadolint ignore=DL3018
 RUN apk add --no-cache \
+      jq \
       musl-dev \
       pcre \
     && apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing \

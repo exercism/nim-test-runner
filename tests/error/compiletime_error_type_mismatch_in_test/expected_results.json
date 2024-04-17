@@ -1,6 +1,6 @@
 {
   "version": 2,
   "status": "error",
-  "message": "\u001B[1mtest_identity.nim(14, 1) \u001B[0mtemplate/generic instantiation of `suite` from here\u001B[0m\n\u001B[1mtest_identity.nim(15, 3) \u001B[0mtemplate/generic instantiation of `test` from here\u001B[0m\n\u001B[1munittest_json.nim(44, 12) \u001B[0mtemplate/generic instantiation of `test` from here\u001B[0m\n\u001B[1mtest_identity.nim(16, 5) \u001B[0mtemplate/generic instantiation of `check` from here\u001B[0m\n\u001B[1m/nim/lib/pure/unittest.nim(692, 43) \u001B[0m\u001B[31mError: \u001B[0mtype mismatch\nExpression: identity(1)\n  [1] 1: int literal(1)\n\nExpected one of (first mismatch at [position]):\n[1] func identity(s: string): string\n\u001B[36m\u001B[0m\u001B[0m\n",
+  "message": "\u001b[1mtest_identity.nim(14, 1) \u001b[0mtemplate/generic instantiation of `suite` from here\u001b[0m\n\u001b[1mtest_identity.nim(15, 3) \u001b[0mtemplate/generic instantiation of `test` from here\u001b[0m\n\u001b[1munittest_json.nim(44, 12) \u001b[0mtemplate/generic instantiation of `test` from here\u001b[0m\n\u001b[1mtest_identity.nim(16, 5) \u001b[0mtemplate/generic instantiation of `check` from here\u001b[0m\n\u001b[1m/nim/lib/pure/unittest.nim(692, 43) \u001b[0m\u001b[31mError: \u001b[0mtype mismatch\nExpression: identity(1)\n  [1] 1: int literal(1)\n\nExpected one of (first mismatch at [position]):\n[1] func identity(s: string): string\n\u001b[36m\u001b[0m\u001b[0m\n",
   "tests": []
 }

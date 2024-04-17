@@ -1,6 +1,6 @@
 {
   "version": 2,
   "status": "error",
-  "message": "\u001B[1mtest_identity.nim(14, 1) \u001B[0mtemplate/generic instantiation of `suite` from here\u001B[0m\n\u001B[1mtest_identity.nim(15, 3) \u001B[0mtemplate/generic instantiation of `test` from here\u001B[0m\n\u001B[1munittest_json.nim(44, 12) \u001B[0mtemplate/generic instantiation of `test` from here\u001B[0m\n\u001B[1mtest_identity.nim(16, 11) \u001B[0m\u001B[31mError: \u001B[0mundeclared identifier: 'identity'\ncandidates (edit distance, scope distance); see '--spellSuggest': \n (0, 5): 'identity'\u001B[36m\u001B[0m\u001B[0m\n",
+  "message": "\u001b[1mtest_identity.nim(14, 1) \u001b[0mtemplate/generic instantiation of `suite` from here\u001b[0m\n\u001b[1mtest_identity.nim(15, 3) \u001b[0mtemplate/generic instantiation of `test` from here\u001b[0m\n\u001b[1munittest_json.nim(44, 12) \u001b[0mtemplate/generic instantiation of `test` from here\u001b[0m\n\u001b[1mtest_identity.nim(16, 11) \u001b[0m\u001b[31mError: \u001b[0mundeclared identifier: 'identity'\ncandidates (edit distance, scope distance); see '--spellSuggest': \n (0, 5): 'identity'\u001b[36m\u001b[0m\u001b[0m\n",
   "tests": []
 }

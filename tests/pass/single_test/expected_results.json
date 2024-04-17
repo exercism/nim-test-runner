@@ -3,10 +3,10 @@
   "status": "pass",
   "tests": [
     {
-      "name": "say hi!",
+      "name": "identity function of 1",
       "status": "pass",
       "output": "",
-      "test_code": "check hello() == \"Hello, World!\""
+      "test_code": "check identity(1) == 1"
     }
   ]
 }
