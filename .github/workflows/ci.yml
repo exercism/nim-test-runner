@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b
+    - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
 
     # Our tests require Nim to be installed to `/nim` because some error messages contain
     # e.g. `/nim/lib/pure/unittest.nim(654)`.
@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b
+    - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
 
     - name: Download all `exercism/nim` exercises
       run: git clone --depth 1 https://github.com/exercism/nim.git
@@ -72,7 +72,7 @@ jobs:
         # Fail if the output JSON is not as expected.
         diff results.json expected_results.json
 
-    - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b
+    - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
       with:
         repository: 'ynfle/diff'
         ref: 'ae470e7702fd07a6ea850b2a6f2de701130fa048'
