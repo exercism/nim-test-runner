@@ -4,3 +4,4 @@
 !Dockerfile
 !.github/**
 results.json
+.DS_Store
