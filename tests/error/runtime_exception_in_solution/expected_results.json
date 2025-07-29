@@ -5,7 +5,7 @@
     {
       "name": "identity function of 1",
       "status": "error",
-      "message": "Unhandled exception: myValueError [ValueError]\n/nim/lib/pure/unittest.nim(692) test_identity\nidentity.nim(2) identity\n",
+      "message": "Unhandled exception: myValueError [ValueError]\n/nim/lib/pure/unittest.nim(689) test_identity\nidentity.nim(2) identity\n",
       "output": "",
       "test_code": "check identity(1) == 1"
     }
